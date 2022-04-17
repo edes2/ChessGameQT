@@ -1,9 +1,9 @@
 #include "Bishop.hpp"
 
-Bishop::Bishop()
-{
-
-}
+//Bishop::Bishop()
+//{
+//
+//}
 
 QString Bishop::getImagePath() {
 	QString path;

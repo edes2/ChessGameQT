@@ -5,7 +5,8 @@
 
 class ChessPiece {
 public:
-	ChessPiece() = default;
+	//ChessPiece() = default;
+	~ChessPiece() = default;
 	virtual QString getImagePath()=0;
 
 	// Exemple pour un pawn

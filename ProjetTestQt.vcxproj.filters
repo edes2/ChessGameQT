@@ -20,6 +20,12 @@
     <Filter Include="Sources Bibliotheques">
       <UniqueIdentifier>{68ace6f3-7624-4063-b7e8-0b2c755fbfc8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Chesspieces">
+      <UniqueIdentifier>{62a9d3a2-e57f-476d-822e-114599a0ed83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Chesspieces">
+      <UniqueIdentifier>{2b8b2499-4050-4811-a96c-a5547ce0198c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -34,34 +40,66 @@
     <ClCompile Include="googletest\src\gtest-all.cc">
       <Filter>Sources Bibliotheques</Filter>
     </ClCompile>
-    <ClCompile Include="CalcWindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Calc.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TestCalc.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ChessWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ChessBoard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ChessPiece.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Bishop.cpp">
+      <Filter>Source Files\Chesspieces</Filter>
+    </ClCompile>
+    <ClCompile Include="King.cpp">
+      <Filter>Source Files\Chesspieces</Filter>
+    </ClCompile>
+    <ClCompile Include="Knight.cpp">
+      <Filter>Source Files\Chesspieces</Filter>
+    </ClCompile>
+    <ClCompile Include="Pawn.cpp">
+      <Filter>Source Files\Chesspieces</Filter>
+    </ClCompile>
+    <ClCompile Include="Queen.cpp">
+      <Filter>Source Files\Chesspieces</Filter>
+    </ClCompile>
+    <ClCompile Include="Rook.cpp">
+      <Filter>Source Files\Chesspieces</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="Calc.hpp">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="CalcWindow.hpp">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="ChessWindow.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="ChessBoard.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ChessPiece.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Bishop.hpp">
+      <Filter>Header Files\Chesspieces</Filter>
+    </ClInclude>
+    <ClInclude Include="Knight.hpp">
+      <Filter>Header Files\Chesspieces</Filter>
+    </ClInclude>
+    <ClInclude Include="Queen.hpp">
+      <Filter>Header Files\Chesspieces</Filter>
+    </ClInclude>
+    <ClInclude Include="Rook.hpp">
+      <Filter>Header Files\Chesspieces</Filter>
+    </ClInclude>
+    <ClInclude Include="Pawn.hpp">
+      <Filter>Header Files\Chesspieces</Filter>
+    </ClInclude>
+    <ClInclude Include="King.hpp">
+      <Filter>Header Files\Chesspieces</Filter>
+    </ClInclude>
+    <ClInclude Include="namespace.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

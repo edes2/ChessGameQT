@@ -18,9 +18,10 @@ public:
 	~ChessWindow() override = default;
 
 public slots: // Les affichages qui peuvent etre connectes au modele et change lorsque modele change?
-
+	void pieceDeplacee();
 private:
-	ChessBoard* chess_;  // Le Modèle (pourrait être un pointeur mais pas nécessaire dans ce cas).
-
+	ChessBoard chess_;  // Le Modèle (pourrait être un pointeur mais pas nécessaire dans ce cas).
+	QPushButton* boutons[8][8];
+	void afficherPieces();
 	//QLabel* affichage_;  // Pour la version QButtonGroup.
 };

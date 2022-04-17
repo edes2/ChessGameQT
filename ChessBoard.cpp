@@ -26,13 +26,27 @@ void ChessBoard::caseAppuye(std::pair<int, int> position)
 		}
 		else
 		{
+			/*
 			if (tryMove(position))
 			{
 				tiles[position] = move(tiles[*caseSelectionnee]);
 				emit pieceDeplacee();
 			}
+			*/
+			tryMove(position);
 			std::cout << "Deselection case: \n";
 			caseSelectionnee = nullptr; // On reset caseSelect apres le mouvement
+			/*
+			std::vector<std::pair<int, int>> movements = tiles[position]->mouvementsValides(tiles);
+			for (auto&& it : movements)
+			{
+				if (position == it)
+				{
+
+				}
+			}
+			*/
+			
 		}
 		/////////////// faire ceci dans fonction
 		/*
@@ -68,19 +82,22 @@ void ChessBoard::caseAppuye(std::pair<int, int> position)
 	//std::cout << "X: " << position.first << ", Y: " << position.second << std::endl;
 }
 
-bool ChessBoard::tryMove(std::pair<int, int> destination)
+void ChessBoard::tryMove(std::pair<int, int> destination)
 {
 	//pieceEmplacement = caseSelectionnee;
 	//piece->estMovementValide(destionation/typepiecedestination, emplacement)
 	if (tiles[destination]) // On veut attaquer une piece
 	{
-		tiles[*caseSelectionnee]->estAttaqueValide(destination);
+		if (tiles[*caseSelectionnee]->estAttaqueValide(destination, tiles))
+		{
+			//pieceAttaque(destination); // Piece est dans select et destination
+		}
 	}
 	else
 	{
-		if (tiles[*caseSelectionnee]->estMovementValide(destination))
+		if (tiles[*caseSelectionnee]->estMovementValide(destination, tiles))
 		{
-			return true;
+			//pieceMouvement(destination); // Piece est dans select et destination
 		}
 	}
 }

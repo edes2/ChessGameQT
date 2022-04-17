@@ -21,7 +21,7 @@ public slots: // Lorsque recoit changements de la vue.
 signals: // Pour envoyer un signal lorsque le modele a change une valeur
 	void pieceDeplacee();
 private:
-	bool tryMove(std::pair<int, int> destination);
+	void tryMove(std::pair<int, int> destination);
 	//std::pair<int, int> caseSelectionnee;
 	//std::shared_ptr<ChessPiece> caseSelectionnee;
 	std::unique_ptr<std::pair<int, int>> caseSelectionnee;

@@ -8,6 +8,31 @@ public:
 	ChessPiece() = default;
 	virtual QString getImagePath()=0;
 
+	// Exemple pour un pawn
+	virtual std::vector<std::pair<int, int>> mouvementsValides()
+	{
+		std::vector<std::pair<int, int>> mouvements;
+		if (side_ == white)
+		{
+			if (position_.second == 6)
+			{
+				mouvements.push_back(std::make_pair(position_.first, position_.second - 2));
+
+			}
+			mouvements.push_back(std::make_pair(position_.first, position_.second - 1));
+		}
+		else
+		{
+			if (position_.second == 1)
+			{
+				mouvements.push_back(std::make_pair(position_.first, position_.second + 2));
+
+			}
+			mouvements.push_back(std::make_pair(position_.first, position_.second + 1));
+		}
+		return mouvements;
+	}
+
 	// Certains pions -> movement!=attaque Ex:Pawn
 	virtual bool estMovementValide(std::pair<int, int> destination) //= 0;
 	{

@@ -9,6 +9,11 @@ public:
 	~ChessPiece() = default;
 	virtual QString getImagePath()=0;
 
+	//
+	//isPathClear()
+	//isMoveValid()
+	side getSide();
+
 	// Exemple pour un pawn
 	virtual std::vector<std::pair<int, int>> mouvementsValides()
 	{
@@ -37,6 +42,7 @@ public:
 	// Certains pions -> movement!=attaque Ex:Pawn
 	virtual bool estMovementValide(std::pair<int, int> destination) //= 0;
 	{
+		return true;
 		if (destination.first == position_.first) // meme colonne
 		{
 			if (side_ == white && (destination.second < position_.second))
@@ -76,7 +82,7 @@ public:
 	}
 	virtual bool estAttaqueValide(std::pair<int, int> destination) //= 0;
 	{
-		return false;
+		return true;
 	}
 	virtual void setSide(side side);
 	virtual void updatePos(std::pair<int, int> position) {

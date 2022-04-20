@@ -15,6 +15,8 @@ public:
 	ChessBoard() = default;
 	void initPartie();
 	std::map<std::pair<int, int>, std::unique_ptr<ChessPiece>> tiles;
+	side getTurn();
+	void switchTurn();
 public slots: // Lorsque recoit changements de la vue.
 	void caseAppuye(std::pair<int, int> position); //recevoir case
 
@@ -25,5 +27,5 @@ private:
 	//std::pair<int, int> caseSelectionnee;
 	//std::shared_ptr<ChessPiece> caseSelectionnee;
 	std::unique_ptr<std::pair<int, int>> caseSelectionnee;
-	side turn;
+	side turn_;
 };

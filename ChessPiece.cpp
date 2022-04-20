@@ -5,3 +5,7 @@
 void ChessPiece::setSide(side side) {
 	side_ = side;
 }
+
+side ChessPiece::getSide() {
+	return side_;
+}

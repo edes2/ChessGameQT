@@ -26,13 +26,6 @@ void ChessBoard::caseAppuye(std::pair<int, int> position)
 		}
 		else
 		{
-			/*
-			if (tryMove(position))
-			{
-				tiles[position] = move(tiles[*caseSelectionnee]);
-				emit pieceDeplacee();
-			}
-			*/
 			tryMove(position);
 			std::cout << "Deselection case: \n";
 			caseSelectionnee = nullptr; // On reset caseSelect apres le mouvement
@@ -70,7 +63,7 @@ void ChessBoard::caseAppuye(std::pair<int, int> position)
 	}
 	else
 	{
-		if (tiles[position])// Verifier si c'est une piece
+		if (tiles[position] && tiles[position]->getSide() == turn_)// Verifier si c'est une piece
 		{
 			caseSelectionnee = std::make_unique<std::pair<int, int>>(position);
 			std::cout << "Nouvelle selection d'une case: \n";
@@ -88,23 +81,52 @@ void ChessBoard::tryMove(std::pair<int, int> destination)
 	//piece->estMovementValide(destionation/typepiecedestination, emplacement)
 	if (tiles[destination]) // On veut attaquer une piece
 	{
-		if (tiles[*caseSelectionnee]->estAttaqueValide(destination, tiles))
+		if (tiles[*caseSelectionnee]->estAttaqueValide(destination))//, tiles))
 		{
 			//pieceAttaque(destination); // Piece est dans select et destination
+			std::cout << "Attaque\n";
+			switchTurn();
 		}
 	}
 	else
 	{
-		if (tiles[*caseSelectionnee]->estMovementValide(destination, tiles))
+		if (tiles[*caseSelectionnee]->estMovementValide(destination))//, tiles))
 		{
 			//pieceMouvement(destination); // Piece est dans select et destination
+			// void checkValidMove();
+			tiles[destination] = move(tiles[*caseSelectionnee]);
+			switchTurn();
+
+				//emit pieceDeplacee();// Envoyer signal a la vue
+			std::cout << "Mouvement d'une piece: \n";
+			std::cout << "X: " << (*caseSelectionnee).first << ", Y: " << (*caseSelectionnee).second << std::endl;
+			std::cout << "Vers case: \n";
+			std::cout << "X: " << destination.first << ", Y: " << destination.second << std::endl;
+
+			emit pieceDeplacee();
 		}
+	}
+}
+
+side ChessBoard::getTurn()
+{
+	return turn_;
+}
+
+void ChessBoard::switchTurn()
+{
+	if (turn_ == white) {
+		turn_ = black;
+	}
+	else
+	{
+		turn_ = white;
 	}
 }
 
 void ChessBoard::initPartie()
 {
-	turn = white;
+	turn_ = white;
 
 	tiles[std::make_pair(0, 0)] = std::make_unique<Rook>();
 
@@ -157,7 +179,6 @@ void ChessBoard::initPartie()
 			tiles[std::make_pair(x, y)] = move(piece);
 		}
 	}
-
 	for (int x : range(8))
 	{
 		tiles[std::make_pair(x, 0)]->setSide(black);

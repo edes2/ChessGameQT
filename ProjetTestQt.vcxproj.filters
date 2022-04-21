@@ -67,6 +67,9 @@
     <ClCompile Include="Rook.cpp">
       <Filter>Source Files\Chesspieces</Filter>
     </ClCompile>
+    <ClCompile Include="Coordonnees.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ChessWindow.hpp">
@@ -99,6 +102,9 @@
       <Filter>Header Files\Chesspieces</Filter>
     </ClInclude>
     <ClInclude Include="namespace.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Coordonnees.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

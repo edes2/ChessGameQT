@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ChessWindow.hpp"
+#include "Coordonnees.hpp"
 #pragma warning(push, 0) // Sinon Qt fait des avertissements à /W4.
 #include <QHBoxLayout>
 #include <QPushButton>
@@ -19,7 +20,7 @@ ChessWindow::ChessWindow(QWidget* parent) :
 {
 
 	auto widgetPrincipal = new QWidget(this);
-	auto layoutPrincipal = new QGridLayout(widgetPrincipal);//QVBoxLayout(widgetPrincipal);
+	auto layoutPrincipal = new QGridLayout(widgetPrincipal);
 
 	chess_.initPartie();
 
@@ -56,10 +57,8 @@ ChessWindow::ChessWindow(QWidget* parent) :
 			// Appeler la fonction virtual de la piece pour loader la bonne image
 			boutons[x][y]->setIconSize(QSize(70, 70));
 			/////////
-			//bouton->update();
-			//bouton->show();
-			//std::pair<int, int> pos = std::make_pair(x,y);
-			QObject::connect(boutons[x][y], &QPushButton::clicked, &chess_, [this, x, y]() { chess_.caseAppuye(std::make_pair(x,y)); });
+			
+			QObject::connect(boutons[x][y], &QPushButton::clicked, &chess_, [this, x, y]() { chess_.caseAppuye(Coordonnees(x, y)); });//std::make_pair(x,y)); });
 			layoutPrincipal->addWidget(boutons[x][y], y, x);
 		}
 	}
@@ -70,6 +69,7 @@ ChessWindow::ChessWindow(QWidget* parent) :
 	setWindowTitle("Chess");
 
 	afficherPieces();
+
 	/*
 	for (int i : range(10))
 	{
@@ -99,7 +99,7 @@ void ChessWindow::afficherPieces()
 		for (int x : range(8))
 		{
 			// afficher les images des chesspieces ici si oui
-			std::pair<int, int> position = std::make_pair(x, y);
+			Coordonnees position(x, y);
 			if (chess_.tiles[position])
 			{
 				QString path = chess_.tiles[position]->getImagePath();

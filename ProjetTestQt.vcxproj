@@ -117,6 +117,7 @@
     <ClCompile Include="ChessBoard.cpp" />
     <ClCompile Include="ChessPiece.cpp" />
     <ClCompile Include="ChessWindow.cpp" />
+    <ClCompile Include="Coordonnees.cpp" />
     <ClCompile Include="googletest\src\gtest-all.cc" />
     <ClCompile Include="King.cpp" />
     <ClCompile Include="Knight.cpp" />
@@ -134,6 +135,7 @@
   <ItemGroup>
     <ClInclude Include="Bishop.hpp" />
     <ClInclude Include="ChessPiece.hpp" />
+    <ClInclude Include="Coordonnees.hpp" />
     <ClInclude Include="King.hpp" />
     <ClInclude Include="Knight.hpp" />
     <ClInclude Include="namespace.hpp" />

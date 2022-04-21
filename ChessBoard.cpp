@@ -15,7 +15,7 @@
 
 using iter::range;
 
-void ChessBoard::caseAppuye(std::pair<int, int> position)
+void ChessBoard::caseAppuye(Coordonnees position)//std::pair<int, int> position)
 {
 	if (caseSelectionnee) // Il y a déjà une pièce sélectionnée
 	{
@@ -65,9 +65,9 @@ void ChessBoard::caseAppuye(std::pair<int, int> position)
 	{
 		if (tiles[position] && tiles[position]->getSide() == turn_)// Verifier si c'est une piece
 		{
-			caseSelectionnee = std::make_unique<std::pair<int, int>>(position);
+			caseSelectionnee = std::make_unique<Coordonnees>(position);
 			std::cout << "Nouvelle selection d'une case: \n";
-			std::cout << "X: " << (*caseSelectionnee).first << ", Y: " << (*caseSelectionnee).second << std::endl;
+			std::cout << "X: " << (*caseSelectionnee).x << ", Y: " << (*caseSelectionnee).y << std::endl;
 		}
 	}
 
@@ -75,7 +75,7 @@ void ChessBoard::caseAppuye(std::pair<int, int> position)
 	//std::cout << "X: " << position.first << ", Y: " << position.second << std::endl;
 }
 
-void ChessBoard::tryMove(std::pair<int, int> destination)
+void ChessBoard::tryMove(Coordonnees destination)//std::pair<int, int> destination)
 {
 	//pieceEmplacement = caseSelectionnee;
 	//piece->estMovementValide(destionation/typepiecedestination, emplacement)
@@ -99,9 +99,9 @@ void ChessBoard::tryMove(std::pair<int, int> destination)
 
 				//emit pieceDeplacee();// Envoyer signal a la vue
 			std::cout << "Mouvement d'une piece: \n";
-			std::cout << "X: " << (*caseSelectionnee).first << ", Y: " << (*caseSelectionnee).second << std::endl;
+			std::cout << "X: " << (*caseSelectionnee).x << ", Y: " << (*caseSelectionnee).y << std::endl;
 			std::cout << "Vers case: \n";
-			std::cout << "X: " << destination.first << ", Y: " << destination.second << std::endl;
+			std::cout << "X: " << destination.x << ", Y: " << destination.y << std::endl;
 
 			emit pieceDeplacee();
 		}
@@ -128,39 +128,39 @@ void ChessBoard::initPartie()
 {
 	turn_ = white;
 
-	tiles[std::make_pair(0, 0)] = std::make_unique<Rook>();
+	tiles[Coordonnees(0,0)] = std::make_unique<Rook>();
 
-	tiles[std::make_pair(1, 0)] = std::make_unique<Knight>();
+	tiles[Coordonnees(1, 0)] = std::make_unique<Knight>();
 
-	tiles[std::make_pair(2, 0)] = std::make_unique<Bishop>();
+	tiles[Coordonnees(2, 0)] = std::make_unique<Bishop>();
 
-	tiles[std::make_pair(3, 0)] = std::make_unique<Queen>();
+	tiles[Coordonnees(3, 0)] = std::make_unique<Queen>();
 
-	tiles[std::make_pair(4, 0)] = std::make_unique<King>();
+	tiles[Coordonnees(4, 0)] = std::make_unique<King>();
 
-	tiles[std::make_pair(5, 0)] = std::make_unique<Bishop>();
+	tiles[Coordonnees(5, 0)] = std::make_unique<Bishop>();
 
-	tiles[std::make_pair(6, 0)] = std::make_unique<Knight>();
+	tiles[Coordonnees(6, 0)] = std::make_unique<Knight>();
 
-	tiles[std::make_pair(7, 0)] = std::make_unique<Rook>();
+	tiles[Coordonnees(7, 0)] = std::make_unique<Rook>();
 
 	///
 
-	tiles[std::make_pair(0, 7)] = std::make_unique<Rook>();
+	tiles[Coordonnees(0, 7)] = std::make_unique<Rook>();
 
-	tiles[std::make_pair(1, 7)] = std::make_unique<Knight>();
+	tiles[Coordonnees(1, 7)] = std::make_unique<Knight>();
 
-	tiles[std::make_pair(2, 7)] = std::make_unique<Bishop>();
+	tiles[Coordonnees(2, 7)] = std::make_unique<Bishop>();
 
-	tiles[std::make_pair(3, 7)] = std::make_unique<Queen>();
+	tiles[Coordonnees(3, 7)] = std::make_unique<Queen>();
 
-	tiles[std::make_pair(4, 7)] = std::make_unique<King>();
+	tiles[Coordonnees(4, 7)] = std::make_unique<King>();
 
-	tiles[std::make_pair(5, 7)] = std::make_unique<Bishop>();
+	tiles[Coordonnees(5, 7)] = std::make_unique<Bishop>();
 
-	tiles[std::make_pair(6, 7)] = std::make_unique<Knight>();
+	tiles[Coordonnees(6, 7)] = std::make_unique<Knight>();
 
-	tiles[std::make_pair(7, 7)] = std::make_unique<Rook>();
+	tiles[Coordonnees(7, 7)] = std::make_unique<Rook>();
 
 	for (int y : range(1, 7))
 	{
@@ -176,12 +176,12 @@ void ChessBoard::initPartie()
 				piece = std::make_unique<Pawn>();
 				piece->setSide(white);
 			}
-			tiles[std::make_pair(x, y)] = move(piece);
+			tiles[Coordonnees(x, y)] = move(piece);
 		}
 	}
 	for (int x : range(8))
 	{
-		tiles[std::make_pair(x, 0)]->setSide(black);
-		tiles[std::make_pair(x, 7)]->setSide(white);
+		tiles[Coordonnees(x, 0)]->setSide(black);
+		tiles[Coordonnees(x, 7)]->setSide(white);
 	}
 }

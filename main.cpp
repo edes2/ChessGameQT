@@ -1,4 +1,5 @@
-﻿#include "ChessBoard.hpp"
+﻿#include "namespace.hpp"
+#include "ChessBoard.hpp"
 #include "ChessWindow.hpp"
 
 #include <QApplication>
@@ -34,7 +35,7 @@ int main(int argc, char *argv[])
 	QApplication app(argc, argv);
 	initialiserBibliothequeCours(argc, argv);
 
-	ChessWindow chessWindow;
+	Vue::ChessWindow chessWindow;
 	chessWindow.show();
 	return app.exec();
 }

@@ -1,14 +1,13 @@
 #pragma once
-// Le Modèle pour calculatrice simple.
-// Par Francois-R.Boyer@PolyMtl.ca
 
 #include "Coordonnees.hpp"
 #include "ChessPiece.hpp"
 #pragma warning(push, 0) // Sinon Qt fait des avertissements à /W4.
 #include <QObject>
+#include <map>
 #pragma pop()
 
-using namespace std; // Dans ce cours on accepte le using namespace std dans le .hpp .
+//using namespace std; // Dans ce cours on accepte le using namespace std dans le .hpp .
 
 class ChessBoard : public QObject {
 	Q_OBJECT
@@ -16,11 +15,11 @@ public:
 	ChessBoard() = default;
 	void initPartie();
 	//std::map<std::pair<int, int>, std::unique_ptr<ChessPiece>> tiles;
-	std::map<Coordonnees, std::unique_ptr<ChessPiece>> tiles;
+	std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles;
 	side getTurn();
 	void switchTurn();
 public slots: // Lorsque recoit changements de la vue.
-	void caseAppuye(Coordonnees position);//std::pair<int, int> position); //recevoir case
+	void caseAppuye(Coordonnees position);
 signals: // Pour envoyer un signal lorsque le modele a change une valeur
 	void pieceDeplacee();
 private:

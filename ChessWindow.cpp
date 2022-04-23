@@ -14,11 +14,11 @@
 #include <cppitertools/range.hpp>
 
 using iter::range;
+using namespace Vue;
 
 ChessWindow::ChessWindow(QWidget* parent) :
 	QMainWindow(parent)
 {
-
 	auto widgetPrincipal = new QWidget(this);
 	auto layoutPrincipal = new QGridLayout(widgetPrincipal);
 
@@ -29,35 +29,19 @@ ChessWindow::ChessWindow(QWidget* parent) :
 
 	for (int y : range(8))
 	{
-		//auto layout = new QGridLayout(); // Pas possible de donner directement le parent au layout (le constructeur prend un QWidget* et un layout n'en est pas un; on ne peut pas mettre un parent qui a déjà un layout; si on met on parent temporaire, addLayout n'accepte pas de changer le parent).
-		//layoutPrincipal->addLayout()
-		//layoutPrincipal->addLayout(layout);
 		for (int x : range(8))
 		{
 			boutons[x][y] = new QPushButton(this);
-			//QPushButton* bouton = new QPushButton(this);
-			//QColor vert(Qt::green);
-			//QPalette palette;
-			//palette.setColor(QPalette::Base, vert);
-			//bouton->setPalette(palette);
-			//bouton->setAutoFillBackground(true);
 			boutons[x][y]->setFixedSize(70, 70);
-
-			//bouton->setObjectName(QString::number(id++));
-			if ((x + y) % 2 == 0) {
+			if ((x + y) % 2 == 0)
+			{
 				boutons[x][y]->setStyleSheet("border: 0px ; background:#FF1694;");
-				//boutons[x][y]->setStyleSheet("border: 0px ; background:rgb(238,238,210);");
 			}
-			else {
+			else
+			{
 				boutons[x][y]->setStyleSheet("border: 0px ; background:#FFFFFF;");
-				//boutons[x][y]->setStyleSheet("border: 0px ; background:rgb(118,150,86);");
 			}
-	
-			// FAIRE UNE FONCTION REFRESH TILES OU LES PLACER ICI POUR DEBUT
-			// Appeler la fonction virtual de la piece pour loader la bonne image
 			boutons[x][y]->setIconSize(QSize(70, 70));
-			/////////
-			
 			QObject::connect(boutons[x][y], &QPushButton::clicked, &chess_, [this, x, y]() { chess_.caseAppuye(Coordonnees(x, y)); });//std::make_pair(x,y)); });
 			layoutPrincipal->addWidget(boutons[x][y], y, x);
 		}
@@ -69,18 +53,6 @@ ChessWindow::ChessWindow(QWidget* parent) :
 	setWindowTitle("Chess");
 
 	afficherPieces();
-
-	/*
-	for (int i : range(10))
-	{
-		auto bouton = new QPushButton(this);
-		//bouton->setText("Button"+i);
-		bouton->setFixedSize(40, 40);
-		layout->addWidget(bouton);
-	}
-	*/
-		
-		//layout->addWidget(nouveauBouton(QString::number(i), [this, i]() { calc_.ajouterChiffre(i); }));
 }
 
 void ChessWindow::pieceDeplacee()
@@ -93,12 +65,8 @@ void ChessWindow::afficherPieces()
 {
 	for (int y : range(8))
 	{
-		//auto layout = new QGridLayout(); // Pas possible de donner directement le parent au layout (le constructeur prend un QWidget* et un layout n'en est pas un; on ne peut pas mettre un parent qui a déjà un layout; si on met on parent temporaire, addLayout n'accepte pas de changer le parent).
-		//layoutPrincipal->addLayout()
-		//layoutPrincipal->addLayout(layout);
 		for (int x : range(8))
 		{
-			// afficher les images des chesspieces ici si oui
 			Coordonnees position(x, y);
 			if (chess_.tiles[position])
 			{
@@ -109,11 +77,11 @@ void ChessWindow::afficherPieces()
 			}
 			else
 			{
-				boutons[x][y]->setIcon(QIcon()); //Mettre une icône vide pour l'enlever
+				boutons[x][y]->setIcon(QIcon());
 			}
 			if (chess_.tiles[position])
 			{
-				chess_.tiles[position]->updatePos(position); // Pour que piece garde son emplacement ???
+				chess_.tiles[position]->updatePos(position);
 			}
 		}
 	}

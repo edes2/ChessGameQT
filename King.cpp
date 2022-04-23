@@ -1,9 +1,38 @@
 #include "King.hpp"
 
+int King::compteur = 0;
+
 King::King()
 {
+	if (compteur >= 2)
+	{
 
+	}
+	++compteur;
 }
+
+std::vector<Coordonnees> King::attaquesPossibles(std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
+{
+	std::vector<Coordonnees> attaques;
+
+	return attaques;
+}
+
+std::vector<Coordonnees> King::movementsPossibles(std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
+{
+	std::vector<Coordonnees> x;
+	return x;
+}
+
+bool King::estMovementValide(Coordonnees destination)
+{
+	return false;
+}
+bool King::estAttaqueValide(Coordonnees destination)
+{
+	return false;
+}
+
 
 QString King::getImagePath() {
 	QString path;

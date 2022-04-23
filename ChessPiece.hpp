@@ -3,6 +3,9 @@
 #include <QString>
 #include "namespace.hpp"
 #include "Coordonnees.hpp"
+#include <map>
+
+//using namespace std;
 
 class ChessPiece {
 public:
@@ -16,11 +19,13 @@ public:
 	side getSide();
 
 	// Exemple pour un pawn
-	virtual std::vector<Coordonnees> mouvementsValides();
+	//virtual std::vector<Coordonnees> mouvementsValides();
 
 	// Certains pions -> movement!=attaque Ex:Pawn
-	virtual bool estMovementValide(Coordonnees destination);
-	virtual bool estAttaqueValide(Coordonnees destination);
+	virtual std::vector<Coordonnees> movementsPossibles(std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles) = 0;
+	virtual std::vector<Coordonnees> attaquesPossibles(std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles) = 0;
+	virtual bool estMovementValide(Coordonnees destination) = 0;
+	virtual bool estAttaqueValide(Coordonnees destination) = 0;
 	virtual void setSide(side side);
 	virtual void updatePos(Coordonnees position);
 protected:

@@ -1,14 +1,15 @@
 #pragma once
 
 #include "ChessBoard.hpp"
-#pragma warning(push, 0) // Sinon Qt fait des avertissements à /W4.
+#include "namespace.hpp"
+#pragma warning(push, 0)
 #include <QMainWindow>
 #include <QPushButton>
 #include <QString>
 #include <QLabel>
 #pragma pop()
 
-class ChessWindow : public QMainWindow {
+class Vue::ChessWindow : public QMainWindow {
 	Q_OBJECT
 public:
 	ChessWindow(QWidget* parent = nullptr); // Construire les cases, les boutons, connecter chaque bouton au modele et position correspondante, mettre les images des pieces sur les cases qui ont des pieces.

@@ -5,24 +5,12 @@ Queen::Queen()
 
 }
 
-std::vector<Coordonnees> Queen::attaquesPossibles(std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
-{
-	std::vector<Coordonnees> attaques;
 
-	return attaques;
-}
-
-std::vector<Coordonnees> Queen::movementsPossibles(std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
-{
-	std::vector<Coordonnees> x;
-	return x;
-}
-
-bool Queen::estMovementValide(Coordonnees destination)
+bool Queen::estMovementValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
 {
 	return false;
 }
-bool Queen::estAttaqueValide(Coordonnees destination)
+bool Queen::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
 {
 	return false;
 }

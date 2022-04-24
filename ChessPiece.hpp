@@ -22,10 +22,10 @@ public:
 	//virtual std::vector<Coordonnees> mouvementsValides();
 
 	// Certains pions -> movement!=attaque Ex:Pawn
-	virtual std::vector<Coordonnees> movementsPossibles(std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles) = 0;
-	virtual std::vector<Coordonnees> attaquesPossibles(std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles) = 0;
-	virtual bool estMovementValide(Coordonnees destination) = 0;
-	virtual bool estAttaqueValide(Coordonnees destination) = 0;
+	//virtual std::vector<Coordonnees> movementsPossibles(std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles) = 0;
+	//virtual std::vector<Coordonnees> attaquesPossibles(std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles) = 0;
+	virtual bool estMovementValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles) = 0;
+	virtual bool estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles) = 0;
 	virtual void setSide(side side);
 	virtual void updatePos(Coordonnees position);
 protected:

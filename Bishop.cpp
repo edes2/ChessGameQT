@@ -5,72 +5,176 @@ Bishop::Bishop()
 
 }
 
-std::vector<Coordonnees> Bishop::attaquesPossibles(std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
+//std::vector<Coordonnees> Bishop::attaquesPossibles(std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
+//{
+//	std::vector<Coordonnees> attaques;
+//	
+//	return attaques;
+//}
+
+//std::vector<Coordonnees> Bishop::movementsPossibles(std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
+//{
+//	std::vector<Coordonnees> mouvements;
+//	int x = position_.x, y = position_.y;
+//	Coordonnees coordonnees(position_.x+1, position_.y+1);
+//	while (!tiles[coordonnees] || coordonnees.x < 8 || coordonnees.y < 8) // BAS-DROITE
+//	{
+//		mouvements.push_back(coordonnees);
+//		coordonnees.x++;
+//		coordonnees.y++;
+//	}
+//	coordonnees.x = position_.x - 1;
+//	coordonnees.y = position_.y + 1;
+//	while (!tiles[coordonnees] || coordonnees.x >= 0 || coordonnees.y < 8) // BAS-GAUCHE
+//	{
+//		mouvements.push_back(coordonnees);
+//		coordonnees.x--;
+//		coordonnees.y++;
+//	}
+//	coordonnees.x = x - 1;
+//	coordonnees.y = y - 1;
+//	while (!tiles[coordonnees] || coordonnees.x >= 0 || coordonnees.y >= 0) // HAUT-GAUCHE
+//	{
+//
+//		mouvements.push_back(coordonnees);
+//		coordonnees.x--;
+//		coordonnees.y--;
+//	}
+//	coordonnees.x = x + 1;
+//	coordonnees.y = y - 1;
+//	while (!tiles[coordonnees] || coordonnees.x < 8 || coordonnees.y >= 0) // HAUT-DROITE
+//	{
+//
+//		mouvements.push_back(coordonnees);
+//		coordonnees.x++;
+//		coordonnees.y--;
+//	}
+//
+//	/*for (int x = position_.x; x < 8; x++)
+//	{
+//		for (int y = position_.y; y < 8; y++)
+//		{
+//			Coordonnees coordonnees(x, y);
+//			if (tiles[coordonnees])
+//			{
+//				break;
+//			}
+//			mouvements.push_back(coordonnees);
+//		}
+//	}
+//	for (int x = position_.x; x >= 0; x--)
+//	{
+//		for (int y = position_.y; y < 8; y++)
+//		{
+//			Coordonnees coordonnees(x, y);
+//			if (tiles[coordonnees])
+//			{
+//				break;
+//			}
+//			mouvements.push_back(coordonnees);
+//		}
+//	}
+//	for (int x = position_.x; x < 8; x++)
+//	{
+//		for (int y = position_.y; y >= 0; y--)
+//		{
+//			Coordonnees coordonnees(x, y);
+//			if (tiles[coordonnees])
+//			{
+//				break;
+//			}
+//			mouvements.push_back(coordonnees);
+//		}
+//	}
+//	for (int x = position_.x; x >= 0; x--)
+//	{
+//		for (int y = position_.y; y >= 0; y--)
+//		{
+//			Coordonnees coordonnees(x, y);
+//			if (tiles[coordonnees])
+//			{
+//				break;
+//			}
+//			mouvements.push_back(coordonnees);
+//		}
+//	}*/
+//	return mouvements;
+//}
+
+bool Bishop::estMovementValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles) {
+	int diffx = destination.x - position_.x;
+	int diffy = destination.y - position_.y;
+	if (abs(diffx) == abs(diffy)) {
+		//return true; // Il faut verifier qu il n y a pas de pieces dans le chemin
+		int i;
+		int j;
+		if (diffx < 0)
+		{
+			i = 1;
+		}
+		else
+		{
+			i = -1;
+		}
+		if (diffy < 0)
+		{
+			j = 1;
+		}
+		else
+		{
+			j = -1;
+		}
+		Coordonnees coordonnees(destination.x, destination.y);
+		while (coordonnees.x != position_.x && coordonnees.y != position_.y)
+		{
+			if (tiles[coordonnees])
+			{
+				return false;
+			}
+			coordonnees.x += i;
+			coordonnees.y += j;
+		}
+	}
+
+	return true;
+}
+
+bool Bishop::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles) 
 {
-	std::vector<Coordonnees> attaques;
-	
-	return attaques;
-}
+	if (tiles[destination]->getSide() == side_)
+	{
+		return false;
+	}
+	int diffx = destination.x - position_.x;
+	int diffy = destination.y - position_.y;
+	int i;
+	int j;
+	if (abs(diffx) == abs(diffy)) {
 
-std::vector<Coordonnees> Bishop::movementsPossibles(std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
-{
-	std::vector<Coordonnees> mouvements;
-	for (int x = position_.x; x < 8; x++)
-	{
-		for (int y = position_.y; y < 8; y++)
+		if (diffx < 0)
 		{
-			Coordonnees coordonnees(x, y);
-			if (tiles[coordonnees])
-			{
-				break;
-			}
-			mouvements.push_back(coordonnees);
+			i = 1;
 		}
-	}
-	for (int x = position_.x; x >= 0; x--)
-	{
-		for (int y = position_.y; y < 8; y++)
+		else
 		{
-			Coordonnees coordonnees(x, y);
-			if (tiles[coordonnees])
-			{
-				break;
-			}
-			mouvements.push_back(coordonnees);
+			i = -1;
 		}
-	}
-	for (int x = position_.x; x < 8; x++)
-	{
-		for (int y = position_.y; y >= 0; y--)
+		if (diffy < 0)
 		{
-			Coordonnees coordonnees(x, y);
-			if (tiles[coordonnees])
-			{
-				break;
-			}
-			mouvements.push_back(coordonnees);
+			j = 1;
 		}
-	}
-	for (int x = position_.x; x >= 0; x--)
-	{
-		for (int y = position_.y; y >= 0; y--)
+		else
 		{
-			Coordonnees coordonnees(x, y);
-			if (tiles[coordonnees])
-			{
-				break;
-			}
-			mouvements.push_back(coordonnees);
+			j = -1;
 		}
-	}
-	return mouvements;
-}
+		destination.x = destination.x + i;
+		destination.y = destination.y + j;
 
-bool Bishop::estMovementValide(Coordonnees destination) {
-	return false;
-}
-
-bool Bishop::estAttaqueValide(Coordonnees destination) {
+		if (estMovementValide(destination, tiles))
+		{
+			return true;
+		}
+	}
 	return false;
 }
 

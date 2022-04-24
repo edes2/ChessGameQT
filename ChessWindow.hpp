@@ -9,7 +9,7 @@
 #include <QLabel>
 #pragma pop()
 
-class Vue::ChessWindow : public QMainWindow {
+class ChessWindow : public QMainWindow {
 	Q_OBJECT
 public:
 	ChessWindow(QWidget* parent = nullptr); // Construire les cases, les boutons, connecter chaque bouton au modele et position correspondante, mettre les images des pieces sur les cases qui ont des pieces.

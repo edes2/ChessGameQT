@@ -14,7 +14,6 @@
 #include <cppitertools/range.hpp>
 
 using iter::range;
-using namespace Vue;
 
 ChessWindow::ChessWindow(QWidget* parent) :
 	QMainWindow(parent)
@@ -57,7 +56,7 @@ ChessWindow::ChessWindow(QWidget* parent) :
 
 void ChessWindow::pieceDeplacee()
 {
-	std::cout << "vALeur changee!\n";
+	std::cout << "Valeur changee!\n";
 	afficherPieces();
 }
 

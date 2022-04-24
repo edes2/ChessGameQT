@@ -1,5 +1,6 @@
 #pragma once
 
+#include "namespace.hpp"
 #include "Coordonnees.hpp"
 #include "ChessPiece.hpp"
 #pragma warning(push, 0) // Sinon Qt fait des avertissements à /W4.

@@ -11,24 +11,24 @@ King::King()
 	++compteur;
 }
 
-std::vector<Coordonnees> King::attaquesPossibles(std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
-{
-	std::vector<Coordonnees> attaques;
+//std::vector<Coordonnees> King::attaquesPossibles(std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
+//{
+//	std::vector<Coordonnees> attaques;
+//
+//	return attaques;
+//}
+//
+//std::vector<Coordonnees> King::movementsPossibles(std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
+//{
+//	std::vector<Coordonnees> x;
+//	return x;
+//}
 
-	return attaques;
-}
-
-std::vector<Coordonnees> King::movementsPossibles(std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
-{
-	std::vector<Coordonnees> x;
-	return x;
-}
-
-bool King::estMovementValide(Coordonnees destination)
+bool King::estMovementValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
 {
 	return false;
 }
-bool King::estAttaqueValide(Coordonnees destination)
+bool King::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
 {
 	return false;
 }

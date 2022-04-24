@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 	QApplication app(argc, argv);
 	initialiserBibliothequeCours(argc, argv);
 
-	Vue::ChessWindow chessWindow;
+	ChessWindow chessWindow;
 	chessWindow.show();
 	return app.exec();
 }

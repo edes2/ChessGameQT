@@ -5,24 +5,12 @@ Rook::Rook()
 
 }
 
-std::vector<Coordonnees> Rook::attaquesPossibles(std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
-{
-	std::vector<Coordonnees> attaques;
 
-	return attaques;
-}
-
-std::vector<Coordonnees> Rook::movementsPossibles(std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
-{
-	std::vector<Coordonnees> x;
-	return x;
-}
-
-bool Rook::estMovementValide(Coordonnees destination)
+bool Rook::estMovementValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
 {
 	return false;
 }
-bool Rook::estAttaqueValide(Coordonnees destination)
+bool Rook::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
 {
 	return false;
 }

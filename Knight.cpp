@@ -5,24 +5,24 @@ Knight::Knight()
 
 }
 
-std::vector<Coordonnees> Knight::attaquesPossibles(std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
-{
-	std::vector<Coordonnees> attaques;
+//std::vector<Coordonnees> Knight::attaquesPossibles(std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
+//{
+//	std::vector<Coordonnees> attaques;
+//
+//	return attaques;
+//}
+//
+//std::vector<Coordonnees> Knight::movementsPossibles(std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
+//{
+//	std::vector<Coordonnees> x;
+//	return x;
+//}
 
-	return attaques;
-}
-
-std::vector<Coordonnees> Knight::movementsPossibles(std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
-{
-	std::vector<Coordonnees> x;
-	return x;
-}
-
-bool Knight::estMovementValide(Coordonnees destination)
+bool Knight::estMovementValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
 {
 	return false;
 }
-bool Knight::estAttaqueValide(Coordonnees destination)
+bool Knight::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
 {
 	return false;
 }

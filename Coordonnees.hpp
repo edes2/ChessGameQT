@@ -3,7 +3,7 @@
 class Coordonnees
 {
 public:
-	Coordonnees() = default;
+	Coordonnees();
 	Coordonnees(int x, int y);
 
 	bool operator==(const Coordonnees& other);

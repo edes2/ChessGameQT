@@ -15,7 +15,7 @@ Bishop::Bishop()
 //std::vector<Coordonnees> Bishop::movementsPossibles(std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
 //{
 //	std::vector<Coordonnees> mouvements;
-//	int x = position_.x, y = position_.y;
+//	int x = position_.x, y = position_.y; 
 //	Coordonnees coordonnees(position_.x+1, position_.y+1);
 //	while (!tiles[coordonnees] || coordonnees.x < 8 || coordonnees.y < 8) // BAS-DROITE
 //	{
@@ -105,7 +105,6 @@ bool Bishop::estMovementValide(Coordonnees destination, std::map<Coordonnees, st
 	int diffx = destination.x - position_.x;
 	int diffy = destination.y - position_.y;
 	if (abs(diffx) == abs(diffy)) {
-		//return true; // Il faut verifier qu il n y a pas de pieces dans le chemin
 		int i;
 		int j;
 		if (diffx < 0)
@@ -134,9 +133,10 @@ bool Bishop::estMovementValide(Coordonnees destination, std::map<Coordonnees, st
 			coordonnees.x += i;
 			coordonnees.y += j;
 		}
+		return true;
 	}
+	return false;
 
-	return true;
 }
 
 bool Bishop::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles) 

@@ -2,6 +2,8 @@
 
 #include "ChessWindow.hpp"
 #include "Coordonnees.hpp"
+#include <chrono>
+#include <thread>
 #pragma warning(push, 0) // Sinon Qt fait des avertissements à /W4.
 #include <QHBoxLayout>
 #include <QPushButton>
@@ -52,12 +54,19 @@ ChessWindow::ChessWindow(QWidget* parent) :
 	setWindowTitle("Chess");
 
 	afficherPieces();
+	
+	raii_ = new RAIIRook(boutons[4][4]);
+
 }
 
 void ChessWindow::pieceDeplacee()
 {
 	std::cout << "Valeur changee!\n";
 	afficherPieces();
+	if (raii_) // Pour demontrer le RAII, on le delete lorsqu on bouge la premiere piece
+	{
+		delete raii_;
+	}
 }
 
 void ChessWindow::afficherPieces()

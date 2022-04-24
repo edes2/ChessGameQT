@@ -29,7 +29,6 @@ void ChessBoard::caseAppuye(Coordonnees position)
 			tryMove(position);
 			std::cout << "Deselection case: \n";
 			caseSelectionnee = nullptr;
-			
 		}
 	}
 	else
@@ -136,6 +135,15 @@ void ChessBoard::initPartie()
 	tiles[Coordonnees(3, 0)] = std::make_shared<Queen>();
 
 	tiles[Coordonnees(4, 0)] = std::make_shared<King>();
+	tiles[Coordonnees(4, 7)] = std::make_shared<King>();
+
+	try {
+		King king;
+	}
+	catch (MoreThanTwoKings& e) {
+		std::cout << "MyException caught: " << e.what() << std::endl;
+	}
+
 
 	tiles[Coordonnees(5, 0)] = std::make_shared<Bishop>();
 
@@ -153,7 +161,7 @@ void ChessBoard::initPartie()
 
 	tiles[Coordonnees(3, 7)] = std::make_shared<Queen>();
 
-	tiles[Coordonnees(4, 7)] = std::make_shared<King>();
+	//tiles[Coordonnees(4, 7)] = std::make_shared<King>();
 
 	tiles[Coordonnees(5, 7)] = std::make_shared<Bishop>();
 
@@ -179,6 +187,7 @@ void ChessBoard::initPartie()
 			tiles[Coordonnees(x, y)] = move(piece);
 		}
 	}
+
 	for (int x : range(8))
 	{
 		tiles[Coordonnees(x, 0)]->setSide(black);

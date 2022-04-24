@@ -6,7 +6,7 @@ King::King()
 {
 	if (compteur >= 2)
 	{
-
+		throw MoreThanTwoKings();
 	}
 	++compteur;
 }
@@ -32,7 +32,6 @@ bool King::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::
 {
 	return false;
 }
-
 
 QString King::getImagePath() {
 	QString path;

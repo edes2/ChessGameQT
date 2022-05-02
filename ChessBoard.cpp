@@ -44,15 +44,31 @@ void ChessBoard::caseAppuye(Coordonnees position)
 
 void ChessBoard::tryMove(Coordonnees destination)
 {
+	//estEnEchec();
 	if (tiles[destination])
 	{
 		if ((tiles[*caseSelectionnee]->getSide() != tiles[destination]->getSide()) 
 			&& tiles[*caseSelectionnee]->estAttaqueValide(destination, tiles))
 		{
-			tiles[destination] = move(tiles[*caseSelectionnee]);
-			std::cout << "Attaque\n";
-			switchTurn();
+			std::shared_ptr<ChessPiece> backup = tiles[destination]; // Pour echec
 
+			tiles[destination] = move(tiles[*caseSelectionnee]);
+			tiles[destination]->updatePos(destination); // Update manuellement pos ?pour si roi
+
+			if (estEnEchec())
+			{
+				//Revenir en arriere
+				std::cout << "Attaque not valid, echec \n";
+				tiles[*caseSelectionnee] = move(tiles[destination]);
+				tiles[*caseSelectionnee]->updatePos(*caseSelectionnee);
+
+				tiles[destination] = backup;
+				tiles[destination]->updatePos(destination);
+			}
+			else {
+				std::cout << "Attaque\n";
+				switchTurn();
+			}
 			emit pieceDeplacee();
 		}
 	}
@@ -61,16 +77,63 @@ void ChessBoard::tryMove(Coordonnees destination)
 		if (tiles[*caseSelectionnee]->estMovementValide(destination, tiles))
 		{
 			tiles[destination] = move(tiles[*caseSelectionnee]);
-			switchTurn();
+			//std::shared_ptr<ChessPiece> backup = tiles[destination]; // Pour echec
+			tiles[destination]->updatePos(destination); // Update manuellement pos ?pour si roi
+			if (estEnEchec())
+			{
+				//Revenir en arriere
+				std::cout << "Move not valid, echec \n";
+				tiles[*caseSelectionnee] = move(tiles[destination]);
+				tiles[*caseSelectionnee]->updatePos(*caseSelectionnee);
+				//tiles[destination] = backup;
+			}
+			else {
+				switchTurn();
 
-			std::cout << "Mouvement d'une piece: \n";
-			std::cout << "X: " << (*caseSelectionnee).x << ", Y: " << (*caseSelectionnee).y << std::endl;
-			std::cout << "Vers case: \n";
-			std::cout << "X: " << destination.x << ", Y: " << destination.y << std::endl;
-
+				std::cout << "Mouvement d'une piece: \n";
+				std::cout << "X: " << (*caseSelectionnee).x << ", Y: " << (*caseSelectionnee).y << std::endl;
+				std::cout << "Vers case: \n";
+				std::cout << "X: " << destination.x << ", Y: " << destination.y << std::endl;
+			}
 			emit pieceDeplacee();
 		}
 	}
+}
+
+bool ChessBoard::estEnEchec()
+{
+	std::shared_ptr<ChessPiece> king;
+	if (turn_ == white)
+	{
+		king = whiteKing;
+	}
+	else
+	{
+		king = blackKing;
+	}
+	for (int y : range(8))
+	{
+		for (int x : range(8))
+		{
+			Coordonnees coord(x, y);
+			if (tiles[coord])
+			{
+				//if (tiles[coord] == whiteKing || tiles[coord] == blackKing) {
+				//	//skip?
+				//	int a = 0;
+				//}
+				if (tiles[coord]->getSide() != turn_) // Piece enemie
+				{
+					if (tiles[coord]->estAttaqueValide(king->getPos(), tiles))
+					{
+						std::cout << "Roi en echec\n";
+						return true;
+					}
+				}
+			}
+		}
+	}
+	return false;
 }
 
 side ChessBoard::getTurn()
@@ -102,8 +165,10 @@ void ChessBoard::initPartie()
 	tiles[Coordonnees(3, 0)] = std::make_shared<Queen>();
 
 	tiles[Coordonnees(4, 0)] = std::make_shared<King>();
+	blackKing = tiles[Coordonnees(4, 0)];
 
 	tiles[Coordonnees(4, 7)] = std::make_shared<King>();
+	whiteKing = tiles[Coordonnees(4, 7)];
 
 	tiles[Coordonnees(5, 0)] = std::make_shared<Bishop>();
 

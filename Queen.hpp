@@ -15,5 +15,9 @@ public:
 
     bool estMovementValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles) override;// { return false; };
     bool estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles) override;// { return false; };
+
+    bool checkDiagonalMov(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles);
+    bool checkStraightMov(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles);
+
 };
 

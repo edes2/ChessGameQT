@@ -14,3 +14,8 @@ void ChessPiece::updatePos(Coordonnees position)
 {
 	position_ = position;
 }
+
+Coordonnees ChessPiece::getPos() const
+{
+	return position_;
+}

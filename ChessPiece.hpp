@@ -29,6 +29,7 @@ public:
 	virtual bool estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles) = 0;
 	virtual void setSide(side side);
 	virtual void updatePos(Coordonnees position);
+	Coordonnees getPos() const;
 protected:
 	side side_;
 	Coordonnees position_;

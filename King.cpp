@@ -11,6 +11,11 @@ King::King()
 	++compteur;
 }
 
+King::~King()
+{
+	--compteur;
+}
+
 //std::vector<Coordonnees> King::attaquesPossibles(std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
 //{
 //	std::vector<Coordonnees> attaques;
@@ -26,10 +31,20 @@ King::King()
 
 bool King::estMovementValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
 {
+
+	//si mov valide, verifier si echec
+	if ((abs(destination.x - position_.x) <= 1) && (abs(destination.y - position_.y) <= 1))
+	{
+		return true;
+	}
 	return false;
 }
 bool King::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
 {
+	if (estMovementValide(destination, tiles) && tiles[destination]->getSide() != side_)
+	{
+		return true;
+	}
 	return false;
 }
 

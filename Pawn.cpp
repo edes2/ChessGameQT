@@ -1,10 +1,5 @@
 #include "Pawn.hpp"
 
-Pawn::Pawn()
-{
-
-}
-
 
 bool Pawn::estMovementValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
 {

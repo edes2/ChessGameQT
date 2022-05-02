@@ -2,8 +2,6 @@
 
 #include "ChessWindow.hpp"
 #include "Coordonnees.hpp"
-#include <chrono>
-#include <thread>
 #pragma warning(push, 0) // Sinon Qt fait des avertissements à /W4.
 #include <QHBoxLayout>
 #include <QPushButton>
@@ -11,6 +9,9 @@
 #include <QLabel>
 #include <QString>
 #include <QVariant>
+#include <QGraphicsItem>
+#include <QGraphicsColorizeEffect>
+#include <QPropertyAnimation>
 #pragma pop()
 #include <iostream>
 #include <cppitertools/range.hpp>
@@ -33,21 +34,22 @@ ChessWindow::ChessWindow(QWidget* parent) :
 		for (int x : range(8))
 		{
 			boutons[x][y] = new QPushButton(this);
-			boutons[x][y]->setFixedSize(70, 70);
+			boutons[x][y]->setFixedSize(80,80);
 			if ((x + y) % 2 == 0)
 			{
-				boutons[x][y]->setStyleSheet("border: 0px ; background:#FF1694;");
+				boutons[x][y]->setStyleSheet("border: 0px ; background:purple;"); //FF1694
 			}
 			else
 			{
-				boutons[x][y]->setStyleSheet("border: 0px ; background:#FFFFFF;");
+				boutons[x][y]->setStyleSheet("border: 0px ; background:light yellow;");
 			}
-			boutons[x][y]->setIconSize(QSize(70, 70));
-			QObject::connect(boutons[x][y], &QPushButton::clicked, &chess_, [this, x, y]() { chess_.caseAppuye(Coordonnees(x, y)); });//std::make_pair(x,y)); });
+			boutons[x][y]->setIconSize(QSize(80, 80));
+			QObject::connect(boutons[x][y], &QPushButton::clicked, &chess_, [this, x, y]() { 
+				chess_.caseAppuye(Coordonnees(x, y));
+			});
 			layoutPrincipal->addWidget(boutons[x][y], y, x);
 		}
 	}
-
 	QObject::connect(&chess_, &ChessBoard::pieceDeplacee, this, &ChessWindow::pieceDeplacee);
 	
 	setCentralWidget(widgetPrincipal);
@@ -55,18 +57,11 @@ ChessWindow::ChessWindow(QWidget* parent) :
 
 	afficherPieces();
 	
-	raii_ = new RAIIRook(boutons[4][4]);
-
 }
 
 void ChessWindow::pieceDeplacee()
 {
-	std::cout << "Valeur changee!\n";
 	afficherPieces();
-	if (raii_) // Pour demontrer le RAII, on le delete lorsqu on bouge la premiere piece
-	{
-		delete raii_;
-	}
 }
 
 void ChessWindow::afficherPieces()
@@ -91,6 +86,13 @@ void ChessWindow::afficherPieces()
 			{
 				chess_.tiles[position]->updatePos(position);
 			}
+			/*QGraphicsColorizeEffect* eEffect = new QGraphicsColorizeEffect(boutons[x][y]);
+			boutons[x][y]->setGraphicsEffect(eEffect);
+			QPropertyAnimation* paAnimation = new QPropertyAnimation(eEffect, "color");
+			paAnimation->setStartValue(QColor(Qt::blue));
+			paAnimation->setEndValue("border: 0px ; background:light yellow;");
+			paAnimation->setDuration(1000);
+			paAnimation->start();*/
 		}
 	}
 }

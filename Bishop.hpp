@@ -6,7 +6,9 @@ class Bishop :
     public ChessPiece
 {
 public:
-    Bishop();
+    Bishop() = default;// = default;
+    //Bishop(side side);
+    ~Bishop() override = default;
     QString getImagePath() override;
     //std::vector<Coordonnees> movementsPossibles(std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles) override;
     //std::vector<Coordonnees> attaquesPossibles(std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles) override;

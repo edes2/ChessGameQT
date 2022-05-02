@@ -7,15 +7,6 @@ struct MoreThanTwoKings : public std::exception {
 	}
 };
 
-namespace Modele {
-	class ChessBoard;
-	class ChessPiece;
-};
-
-namespace Vue {
-	class ChessWindow;
-};
-
 enum side {
 	white,
 	black

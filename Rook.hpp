@@ -6,7 +6,8 @@ class Rook :
     public ChessPiece
 {
 public:
-    Rook();
+    Rook() = default;
+    ~Rook() override = default;
     QString getImagePath() override;
     //std::vector<Coordonnees> movementsPossibles(std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles) override;
     //std::vector<Coordonnees> attaquesPossibles(std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles) override;

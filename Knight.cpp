@@ -1,30 +1,23 @@
 #include "Knight.hpp"
 
-Knight::Knight()
-{
-
-}
-
-//std::vector<Coordonnees> Knight::attaquesPossibles(std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
-//{
-//	std::vector<Coordonnees> attaques;
-//
-//	return attaques;
-//}
-//
-//std::vector<Coordonnees> Knight::movementsPossibles(std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
-//{
-//	std::vector<Coordonnees> x;
-//	return x;
-//}
-
+// on sait deja que case appuyee est vide
 bool Knight::estMovementValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
 {
+	if ((abs(destination.x - position_.x) == 2) && (abs(destination.y - position_.y) == 1))
+	{
+		return true;
+	}
+	if ((abs(destination.x - position_.x) == 1) && (abs(destination.y - position_.y) == 2))
+	{
+		return true;
+	}
 	return false;
 }
+
+// on sait que case appuye est piece
 bool Knight::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
 {
-	return false;
+	return estMovementValide(destination, tiles);
 }
 
 QString Knight::getImagePath() {

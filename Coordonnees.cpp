@@ -15,6 +15,13 @@ bool Coordonnees::operator==(const Coordonnees& other)
 	}
 }
 
+Coordonnees& Coordonnees::operator-(const Coordonnees& other)
+{
+	x = x - other.x;
+	y = y - other.y;
+	return *this;
+};
+
 Coordonnees& Coordonnees::operator=(const Coordonnees& other)
 {
 	if (this == &other)
@@ -23,3 +30,12 @@ Coordonnees& Coordonnees::operator=(const Coordonnees& other)
 	y = other.y;
 	return *this;
 };
+
+// On doit avoir ce overload d'opérateur sinon ne marche pas avec un std::map
+bool Coordonnees::operator<(const Coordonnees& coord) const {
+	if (x < coord.x) return true;
+	if (x > coord.x) return false;
+	if (y < coord.y) return true;
+	if (y > coord.y) return false;
+	return false;
+}

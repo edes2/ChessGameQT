@@ -10,13 +10,9 @@ public:
 
 	Coordonnees& operator=(const Coordonnees& other);
 
-    bool operator<(const Coordonnees& coord) const {
-        if (x < coord.x) return true;
-        if (x > coord.x) return false;
-        if (y < coord.y) return true;
-        if (y > coord.y) return false;
-        return false;
-    }
+	Coordonnees& operator-(const Coordonnees& other);
+
+	bool operator<(const Coordonnees& coord) const;
 
 	int x;
 	int y;

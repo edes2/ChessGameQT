@@ -1,11 +1,5 @@
 #include "Rook.hpp"
 
-Rook::Rook()
-{
-
-}
-
-
 bool Rook::estMovementValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
 {
 	return false;

@@ -46,24 +46,8 @@ void ChessBoard::tryMove(Coordonnees destination)
 {
 	if (tiles[destination])
 	{
-		/*std::vector<Coordonnees> attaques;
-		attaques = tiles[*caseSelectionnee]->attaquesPossibles(tiles);
-		for (auto&& it : attaques)
-		{
-			if (destination == it)
-			{
-				tiles[destination] = move(tiles[*caseSelectionnee]);
-				switchTurn();
-
-				std::cout << "Attaque d'une piece: \n";
-				std::cout << "X: " << (*caseSelectionnee).x << ", Y: " << (*caseSelectionnee).y << std::endl;
-				std::cout << "Vers case: \n";
-				std::cout << "X: " << destination.x << ", Y: " << destination.y << std::endl;
-
-				emit pieceDeplacee();
-			}
-		}*/
-		if (tiles[*caseSelectionnee]->estAttaqueValide(destination, tiles))
+		if ((tiles[*caseSelectionnee]->getSide() != tiles[destination]->getSide()) 
+			&& tiles[*caseSelectionnee]->estAttaqueValide(destination, tiles))
 		{
 			tiles[destination] = move(tiles[*caseSelectionnee]);
 			std::cout << "Attaque\n";
@@ -74,23 +58,6 @@ void ChessBoard::tryMove(Coordonnees destination)
 	}
 	else
 	{
-		//std::vector<Coordonnees> mouvements;
-		//mouvements = tiles[*caseSelectionnee]->movementsPossibles(tiles);//tiles); peut pas passer car c des unique_ptr dans la map???
-		//for (auto&& it : mouvements)
-		//{
-		//	if (destination == it)
-		//	{
-		//		tiles[destination] = move(tiles[*caseSelectionnee]);
-		//		switchTurn();
-
-		//		std::cout << "Mouvement d'une piece: \n";
-		//		std::cout << "X: " << (*caseSelectionnee).x << ", Y: " << (*caseSelectionnee).y << std::endl;
-		//		std::cout << "Vers case: \n";
-		//		std::cout << "X: " << destination.x << ", Y: " << destination.y << std::endl;
-
-		//		emit pieceDeplacee();
-		//	}
-		//}
 		if (tiles[*caseSelectionnee]->estMovementValide(destination, tiles))
 		{
 			tiles[destination] = move(tiles[*caseSelectionnee]);
@@ -135,23 +102,14 @@ void ChessBoard::initPartie()
 	tiles[Coordonnees(3, 0)] = std::make_shared<Queen>();
 
 	tiles[Coordonnees(4, 0)] = std::make_shared<King>();
+
 	tiles[Coordonnees(4, 7)] = std::make_shared<King>();
-
-	try {
-		King king;
-	}
-	catch (MoreThanTwoKings& e) {
-		std::cout << "MyException caught: " << e.what() << std::endl;
-	}
-
 
 	tiles[Coordonnees(5, 0)] = std::make_shared<Bishop>();
 
 	tiles[Coordonnees(6, 0)] = std::make_shared<Knight>();
 
 	tiles[Coordonnees(7, 0)] = std::make_shared<Rook>();
-
-	///
 
 	tiles[Coordonnees(0, 7)] = std::make_shared<Rook>();
 
@@ -160,8 +118,6 @@ void ChessBoard::initPartie()
 	tiles[Coordonnees(2, 7)] = std::make_shared<Bishop>();
 
 	tiles[Coordonnees(3, 7)] = std::make_shared<Queen>();
-
-	//tiles[Coordonnees(4, 7)] = std::make_shared<King>();
 
 	tiles[Coordonnees(5, 7)] = std::make_shared<Bishop>();
 

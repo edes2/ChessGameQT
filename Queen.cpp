@@ -1,10 +1,5 @@
 #include "Queen.hpp"
 
-Queen::Queen()
-{
-
-}
-
 
 bool Queen::estMovementValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
 {

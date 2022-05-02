@@ -7,6 +7,7 @@ class King :
 {
 public:
     King();
+    ~King() override;
     QString getImagePath() override;
     //std::vector<Coordonnees> movementsPossibles(std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles) override;
     //std::vector<Coordonnees> attaquesPossibles(std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles) override;

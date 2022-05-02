@@ -9,8 +9,9 @@
 
 class ChessPiece {
 public:
-	//ChessPiece() = default;
-	~ChessPiece() = default;
+	ChessPiece() = default;
+	//ChessPiece(side side); //= default;
+	virtual ~ChessPiece() = default;
 	virtual QString getImagePath() = 0;
 
 	//

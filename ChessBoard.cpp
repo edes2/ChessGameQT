@@ -26,7 +26,12 @@ void ChessBoard::caseAppuye(Coordonnees position)
 		}
 		else
 		{
-			tryMove(position);
+			//tryMove(position);
+			if (tryMove(position))
+			{
+				std::cout << "move done\n";
+				estEnEchecEtMath(); //je dois faire une fonction dans le roi !!!
+			}
 			std::cout << "Deselection case: \n";
 			caseSelectionnee = nullptr;
 		}
@@ -35,14 +40,14 @@ void ChessBoard::caseAppuye(Coordonnees position)
 	{
 		if (tiles[position] && tiles[position]->getSide() == turn_)
 		{
-			caseSelectionnee = std::make_unique<Coordonnees>(position);
+			caseSelectionnee = std::make_shared<Coordonnees>(position);
 			std::cout << "Nouvelle selection d'une case: \n";
 			std::cout << "X: " << (*caseSelectionnee).x << ", Y: " << (*caseSelectionnee).y << std::endl;
 		}
 	}
 }
 
-void ChessBoard::tryMove(Coordonnees destination)
+bool ChessBoard::tryMove(Coordonnees destination)
 {
 	//estEnEchec();
 	if (tiles[destination])
@@ -64,12 +69,15 @@ void ChessBoard::tryMove(Coordonnees destination)
 
 				tiles[destination] = backup;
 				tiles[destination]->updatePos(destination);
+				return false;
 			}
 			else {
 				std::cout << "Attaque\n";
 				switchTurn();
+				emit pieceDeplacee();
+				return true;
 			}
-			emit pieceDeplacee();
+			
 		}
 	}
 	else
@@ -86,6 +94,7 @@ void ChessBoard::tryMove(Coordonnees destination)
 				tiles[*caseSelectionnee] = move(tiles[destination]);
 				tiles[*caseSelectionnee]->updatePos(*caseSelectionnee);
 				//tiles[destination] = backup;
+				return false;
 			}
 			else {
 				switchTurn();
@@ -94,10 +103,37 @@ void ChessBoard::tryMove(Coordonnees destination)
 				std::cout << "X: " << (*caseSelectionnee).x << ", Y: " << (*caseSelectionnee).y << std::endl;
 				std::cout << "Vers case: \n";
 				std::cout << "X: " << destination.x << ", Y: " << destination.y << std::endl;
+				emit pieceDeplacee();
+				return true;
 			}
-			emit pieceDeplacee();
+			
+			//emit pieceDeplacee();
 		}
 	}
+}
+
+void ChessBoard::estEnEchecEtMath() // met un bool fin partie?
+{
+	//std::shared_ptr<Coordonnees> backup = caseSelectionnee;
+	/*bool fin = true;
+	for (int i = -1; i <= 1; i++)
+	{
+		for (int j = -1; i <= 1; i++)
+		{
+			caseSelectionnee = std::make_shared<Coordonnees>(whiteKing->getPos());
+			if (tryMove(Coordonnees(whiteKing->getPos().x + i, whiteKing->getPos().y + j)))
+			{
+				fin = false;
+			}
+			caseSelectionnee = std::make_shared<Coordonnees>(blackKing->getPos());
+			if (tryMove(Coordonnees(blackKing->getPos().x + i, blackKing->getPos().y + j)))
+			{
+				fin = false;
+			}
+		}
+	}
+	if (fin) { "fin game\n"; };*/
+	//caseSelectionnee = backup;
 }
 
 bool ChessBoard::estEnEchec()

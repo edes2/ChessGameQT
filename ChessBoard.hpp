@@ -21,10 +21,12 @@ public slots: // Lorsque recoit changements de la vue.
 signals: // Pour envoyer un signal lorsque le modele a change une valeur
 	void pieceDeplacee();
 private:
-	void tryMove(Coordonnees destination);
+	bool tryMove(Coordonnees destination);
 	bool estEnEchec();
-	std::unique_ptr<Coordonnees> caseSelectionnee;
+	void estEnEchecEtMath();
+	std::shared_ptr<Coordonnees> caseSelectionnee;
 	std::shared_ptr<ChessPiece> whiteKing;
 	std::shared_ptr<ChessPiece> blackKing;
 	side turn_;
+	bool gagnantPartie;
 };

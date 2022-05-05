@@ -125,6 +125,7 @@
     <ClCompile Include="Pawn.cpp" />
     <ClCompile Include="Queen.cpp" />
     <ClCompile Include="Rook.cpp" />
+    <ClCompile Include="TestChess.cpp" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ChessWindow.hpp" />

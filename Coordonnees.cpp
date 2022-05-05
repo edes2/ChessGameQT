@@ -4,7 +4,7 @@ Coordonnees::Coordonnees() : x(0), y(0) {};
 
 Coordonnees::Coordonnees(int x, int y) : x(x), y(y) {};
 
-bool Coordonnees::operator==(const Coordonnees& other)
+bool Coordonnees::operator==(const Coordonnees& other) const
 {
 	if (other.x == x && other.y == y)
 	{

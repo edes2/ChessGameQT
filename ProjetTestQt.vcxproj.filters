@@ -70,6 +70,9 @@
     <ClCompile Include="Coordonnees.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TestChess.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ChessWindow.hpp">

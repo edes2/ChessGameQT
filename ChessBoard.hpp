@@ -23,7 +23,8 @@ signals: // Pour envoyer un signal lorsque le modele a change une valeur
 private:
 	bool tryMove(Coordonnees destination);
 	bool estEnEchec();
-	void estEnEchecEtMath();
+	bool estEnEchecEtMath();
+	void finPartie();
 	std::shared_ptr<Coordonnees> caseSelectionnee;
 	std::shared_ptr<ChessPiece> whiteKing;
 	std::shared_ptr<ChessPiece> blackKing;

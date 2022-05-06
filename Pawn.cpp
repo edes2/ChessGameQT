@@ -1,5 +1,10 @@
 #include "Pawn.hpp"
 
+Pawn::Pawn()
+{
+	type_ = pawn;
+}
+
 //bool Pawn::checkEnPassant(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
 //{
 //	Coordonnees diff(destination.x - position_.x, destination.y - position_.y);
@@ -68,6 +73,10 @@ bool Pawn::estMovementValide(Coordonnees destination, std::map<Coordonnees, std:
 
 bool Pawn::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)//std::pair<int, int> destination) //= 0;
 {
+	if (tiles[destination]->getSide() == side_)
+	{
+		return false;
+	}
 	if (side_ == white)
 	{
 		if (((destination.x == position_.x + 1) && (destination.y == position_.y - 1)) || ((destination.x == position_.x - 1) && (destination.y == position_.y - 1)))

@@ -35,14 +35,15 @@ ChessWindow::ChessWindow(QWidget* parent) :
 		{
 			boutons[x][y] = new QPushButton(this);
 			boutons[x][y]->setFixedSize(80,80);
-			if ((x + y) % 2 == 0)
-			{
-				boutons[x][y]->setStyleSheet("border: 0px ; background:purple;"); //FF1694
-			}
-			else
-			{
-				boutons[x][y]->setStyleSheet("border: 0px ; background:light yellow;");
-			}
+			setColor(x, y);
+			//if ((x + y) % 2 == 0)
+			//{
+			//	boutons[x][y]->setStyleSheet("border: 0px ; background-color:#FF1694;"); //FF1694
+			//}
+			//else
+			//{
+			//	boutons[x][y]->setStyleSheet("border: 0px ; background-color:#FFFFFF;");
+			//}
 			boutons[x][y]->setIconSize(QSize(80, 80));
 			QObject::connect(boutons[x][y], &QPushButton::clicked, &chess_, [this, x, y]() { 
 				chess_.caseAppuye(Coordonnees(x, y));
@@ -50,13 +51,35 @@ ChessWindow::ChessWindow(QWidget* parent) :
 			layoutPrincipal->addWidget(boutons[x][y], y, x);
 		}
 	}
+
 	QObject::connect(&chess_, &ChessBoard::pieceDeplacee, this, &ChessWindow::pieceDeplacee);
-	
+
+	QObject::connect(&chess_, &ChessBoard::finPartie, this, &ChessWindow::finPartie);
+
+	QObject::connect(&chess_, &ChessBoard::selectionPossible, this, &ChessWindow::selectionPossible);
+
+	// Un connect pour le reset (avec initPartie du modele)
+	// Un connect pour un label qui affiche le tour
+	// Un connect qui laisser l utilisateur choisir quel piece avoir qd pion arrive au bout?
+	//CHANGER BOUTONS LISTE POUR GENRE DE MAP DE COORDONNEES??
+
 	setCentralWidget(widgetPrincipal);
 	setWindowTitle("Chess");
 
 	afficherPieces();
 	
+}
+
+void ChessWindow::setColor(int x, int y)
+{
+	if ((x + y) % 2 == 0)
+	{
+		boutons[x][y]->setStyleSheet("border: 0px ; background-color:#FF1694;"); //FF1694
+	}
+	else
+	{
+		boutons[x][y]->setStyleSheet("border: 0px ; background-color:#FFFFFF;");
+	}
 }
 
 void ChessWindow::pieceDeplacee()
@@ -71,6 +94,7 @@ void ChessWindow::afficherPieces()
 		for (int x : range(8))
 		{
 			Coordonnees position(x, y);
+			setColor(x, y);
 			if (chess_.tiles[position])
 			{
 				QString path = chess_.tiles[position]->getImagePath();
@@ -82,10 +106,13 @@ void ChessWindow::afficherPieces()
 			{
 				boutons[x][y]->setIcon(QIcon());
 			}
-			if (chess_.tiles[position])
-			{
-				chess_.tiles[position]->updatePos(position);
-			}
+
+			//if (chess_.tiles[position])
+			//{
+			//	chess_.tiles[position]->updatePos(position);
+			//}
+
+
 			/*QGraphicsColorizeEffect* eEffect = new QGraphicsColorizeEffect(boutons[x][y]);
 			boutons[x][y]->setGraphicsEffect(eEffect);
 			QPropertyAnimation* paAnimation = new QPropertyAnimation(eEffect, "color");
@@ -95,4 +122,26 @@ void ChessWindow::afficherPieces()
 			paAnimation->start();*/
 		}
 	}
+}
+
+void ChessWindow::finPartie(side loser)
+{
+	if (loser == white)
+	{
+		std::cout << "Les blancs sont en echec et math!\n";
+		//emit finPartie(white);
+	}
+	else
+	{
+		std::cout << "Les noirs sont en echec et math!\n";
+		//emit finPartie(black);
+	}
+}
+
+void ChessWindow::selectionPossible(Coordonnees position)
+{
+	// Piece selectionnee?
+	int x = position.x;
+	int y = position.y;
+	boutons[x][y]->setStyleSheet("border: 0px ; background-color:#e6d27a;");
 }

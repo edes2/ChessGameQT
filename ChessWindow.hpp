@@ -16,8 +16,11 @@ public:
 	~ChessWindow() override = default;
 public slots: // Les affichages qui peuvent etre connectes au modele et change lorsque modele change?
 	void pieceDeplacee();
+	void finPartie(side loser);
+	void selectionPossible(Coordonnees position);
 private:
 	ChessBoard chess_;  // Le Modèle (pourrait être un pointeur mais pas nécessaire dans ce cas).
 	QPushButton* boutons[8][8];
 	void afficherPieces();
+	void setColor(int x, int y);
 };

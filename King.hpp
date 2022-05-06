@@ -16,5 +16,7 @@ public:
     bool estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles) override;// { return false; };
 private:
     static int compteur;
+    //bool castling;
+    //bool hasMoved;
 };
 

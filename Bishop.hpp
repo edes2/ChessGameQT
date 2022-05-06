@@ -6,7 +6,7 @@ class Bishop :
     public ChessPiece
 {
 public:
-    Bishop() = default;// = default;
+    Bishop();// = default;// = default;
     //Bishop(side side);
     ~Bishop() override = default;
     QString getImagePath() override;

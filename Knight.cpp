@@ -1,5 +1,10 @@
 #include "Knight.hpp"
 
+Knight::Knight()
+{
+	type_ = knight;
+}
+
 // on sait deja que case appuyee est vide
 bool Knight::estMovementValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
 {
@@ -17,6 +22,10 @@ bool Knight::estMovementValide(Coordonnees destination, std::map<Coordonnees, st
 // on sait que case appuye est piece
 bool Knight::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
 {
+	if (tiles[destination]->getSide() == side_)
+	{
+		return false;
+	}
 	return estMovementValide(destination, tiles);
 }
 

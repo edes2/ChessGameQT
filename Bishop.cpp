@@ -1,6 +1,11 @@
 #include "Bishop.hpp"
 #include <cmath>
 
+Bishop::Bishop()
+{
+	type_ = bishop;
+}
+
 bool Bishop::estMovementValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles) {
 	int diffx = destination.x - position_.x;
 	int diffy = destination.y - position_.y;

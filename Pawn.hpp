@@ -6,7 +6,7 @@ class Pawn :
     public ChessPiece
 {
 public:
-    Pawn() = default;
+    Pawn();// = default;
     ~Pawn() override = default;
     QString getImagePath() override;
     //std::vector<Coordonnees> movementsPossibles(std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles) override;

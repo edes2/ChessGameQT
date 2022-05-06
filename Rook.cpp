@@ -1,5 +1,16 @@
 #include "Rook.hpp"
 
+Rook::Rook()
+{
+	type_ = rook;
+	hasMoved = false;
+}
+
+//bool Rook::getHasMoved() const
+//{
+//	return hasMoved;
+//}
+
 bool Rook::estMovementValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
 {
 	Coordonnees diff(destination.x - position_.x, destination.y - position_.y);
@@ -25,12 +36,17 @@ bool Rook::estMovementValide(Coordonnees destination, std::map<Coordonnees, std:
 			coord.x += i;
 			coord.y += j;
 		}
+		if (!hasMoved) { hasMoved = true; }
 		return true;
 	}
 	return false;
 }
 bool Rook::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
 {
+	if (tiles[destination]->getSide() == side_)
+	{
+		return false;
+	}
 	return estMovementValide(destination, tiles);
 }
 

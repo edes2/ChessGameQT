@@ -1,5 +1,10 @@
 #include "Queen.hpp"
 
+Queen::Queen()
+{
+	type_ = queen;
+}
+
 bool Queen::checkDiagonalMov(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles) 
 {
 	int diffx = destination.x - position_.x;
@@ -78,6 +83,10 @@ bool Queen::estMovementValide(Coordonnees destination, std::map<Coordonnees, std
 }
 bool Queen::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
 {
+	if (tiles[destination]->getSide() == side_)
+	{
+		return false;
+	}
 	return estMovementValide(destination, tiles);
 }
 

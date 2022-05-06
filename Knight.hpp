@@ -6,7 +6,7 @@ class Knight :
     public ChessPiece
 {
 public:
-    Knight() = default;
+    Knight();// = default;
     ~Knight() override = default;
     QString getImagePath() override;
     //std::vector<Coordonnees> movementsPossibles(std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles) override;

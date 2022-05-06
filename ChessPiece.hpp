@@ -17,7 +17,7 @@ public:
 	//
 	//isPathClear()
 	//isMoveValid()
-	side getSide();
+	side getSide() const;
 
 	// Exemple pour un pawn
 	//virtual std::vector<Coordonnees> mouvementsValides();
@@ -30,7 +30,12 @@ public:
 	virtual void setSide(side side);
 	virtual void updatePos(Coordonnees position);
 	Coordonnees getPos() const;
+	type getType() const;
+	bool getHasMoved() const;
+	void setHasMoved();
 protected:
+	bool hasMoved;
 	side side_;
+	type type_;
 	Coordonnees position_;
 };

@@ -11,7 +11,7 @@ King::King()
 	++compteur;
 	//castling = false;
 	type_ = king;
-	hasMoved = false;
+	//hasMoved = false;
 }
 
 King::~King()
@@ -47,6 +47,7 @@ bool King::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::
 	// Castling
 	if (!hasMoved) 
 	{
+		if (!tiles[destination]) { return false; }
 		if (tiles[destination]->getSide() == side_ && tiles[destination]->getType() == rook)
 		{
 			if (tiles[destination]->getHasMoved() == false)
@@ -82,7 +83,7 @@ bool King::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::
 			}
 		}
 	}
-	if (estMovementValide(destination, tiles) && tiles[destination]->getSide() != side_)
+	if (estMovementValide(destination, tiles) && tiles[destination] && tiles[destination]->getSide() != side_)
 	{
 		//if (!hasMoved) { hasMoved = true; }
 		return true;

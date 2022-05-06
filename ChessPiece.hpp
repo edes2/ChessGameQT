@@ -34,7 +34,7 @@ public:
 	bool getHasMoved() const;
 	void setHasMoved();
 protected:
-	bool hasMoved;
+	bool hasMoved=false;
 	side side_;
 	type type_;
 	Coordonnees position_;

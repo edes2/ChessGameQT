@@ -11,7 +11,7 @@
 class ChessBoard : public QObject {
 	Q_OBJECT
 public:
-	ChessBoard() = default;
+	ChessBoard() = default; //{ estBackup = false; };// = default;
 	void initPartie();
 	std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles;
 	side getTurn();
@@ -35,4 +35,6 @@ private:
 	std::shared_ptr<ChessPiece> blackKing;
 	side turn_;
 	bool gagnantPartie;
+	bool estBackup;
+	bool fin;
 };

@@ -30,7 +30,7 @@ void ChessBoard::caseAppuye(Coordonnees position)
 			//tryMove(position);
 			if (tryMove(position))
 			{
-				if (!tiles[position]->getHasMoved())
+				if (tiles[position] && !tiles[position]->getHasMoved()) // Si c est un castling, c est une case vide a tiles[position]
 				{
 					tiles[position]->setHasMoved();
 				}
@@ -41,7 +41,7 @@ void ChessBoard::caseAppuye(Coordonnees position)
 					if (estEnEchecEtMath()) //je dois faire une fonction dans le roi !!!
 					{
 						//std::cout << "echec et math\n";
-						partieTerminee();
+						fin=true;
 					}
 				}
 				updateBoard();
@@ -49,6 +49,10 @@ void ChessBoard::caseAppuye(Coordonnees position)
 			std::cout << "Deselection case: \n";
 			caseSelectionnee = nullptr;
 			emit pieceDeplacee();
+			if (fin)
+			{
+				partieTerminee();
+			}
 		}
 	}
 	else
@@ -76,20 +80,30 @@ void ChessBoard::mouvementsPossibles()
 			{
 				backup = tiles[coord];
 			}
-			if (tryMove(coord))
+			if (tiles[coord] && tiles[*caseSelectionnee]->getType() == king && tiles[coord]->getType() == rook)
 			{
-				//On revient en arriere
-				//if roi & rook ->castling()=true -> faire backup ici (car castling va retourner true)
-				tiles[*caseSelectionnee] = move(tiles[coord]);
-				tiles[*caseSelectionnee]->updatePos(*caseSelectionnee);
-
-				if (backup)
+				estBackup = true;
+				if (tryMove(coord))
 				{
-					tiles[coord] = move(backup);
-					tiles[coord]->updatePos(coord);
+					emit selectionPossible(coord);
 				}
-				// EMIT ? CASE EN BLEUE
-				emit selectionPossible(coord);
+				estBackup = false;
+			}
+			else {
+				if (tryMove(coord))
+				{
+				
+					tiles[*caseSelectionnee] = move(tiles[coord]);
+					tiles[*caseSelectionnee]->updatePos(*caseSelectionnee);
+
+					if (backup)
+					{
+						tiles[coord] = move(backup);
+						tiles[coord]->updatePos(coord);
+					}
+					// EMIT ? CASE EN BLEUE
+					emit selectionPossible(coord);
+				}
 			}
 		}
 	}
@@ -216,6 +230,18 @@ bool ChessBoard::tryCastling(Coordonnees position)
 		std::cout << "Castling!\n";
 		//switchTurn();
 		//emit pieceDeplacee();
+		if (estBackup) //var bool
+		{
+			tiles[*caseSelectionnee] = move(tiles[nouvelleposKing]);
+			tiles[*caseSelectionnee]->updatePos(*caseSelectionnee);
+			
+			tiles[position] = move(tiles[nouvelleposRook]);
+			tiles[position]->updatePos(position);
+		}
+		else {
+			tiles[nouvelleposKing]->setHasMoved();
+			tiles[nouvelleposRook]->setHasMoved();
+		}
 		return true;
 	}
 	
@@ -388,6 +414,9 @@ void ChessBoard::switchTurn()
 // comment faire dans une seule boucle???
 void ChessBoard::initPartie()
 {
+	estBackup = false; // Pour percevoir les mouvements a l avance.
+	fin = false; // Pour savoir quand la partie est finie
+
 	turn_ = white;
 
 	tiles[Coordonnees(0,0)] = std::make_shared<Rook>();

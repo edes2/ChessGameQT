@@ -4,6 +4,7 @@
 #include "Coordonnees.hpp"
 #pragma warning(push, 0) // Sinon Qt fait des avertissements à /W4.
 #include <QHBoxLayout>
+#include <QMessageBox>
 #include <QPushButton>
 #include <QButtonGroup>
 #include <QLabel>
@@ -22,12 +23,18 @@ ChessWindow::ChessWindow(QWidget* parent) :
 	QMainWindow(parent)
 {
 	auto widgetPrincipal = new QWidget(this);
-	auto layoutPrincipal = new QGridLayout(widgetPrincipal);
+	//auto layoutPrincipal = new QGridLayout(widgetPrincipal);
+
+	auto layoutPrincipal = new QVBoxLayout(widgetPrincipal);
+	auto layout = new QGridLayout(); // Pas possible de donner directement le parent au layout (le constructeur prend un QWidget* et un layout n'en est pas un; on ne peut pas mettre un parent qui a déjà un layout; si on met on parent temporaire, addLayout n'accepte pas de changer le parent).
+	layoutPrincipal->addLayout(layout);
 
 	chess_.initPartie();
 
 	layoutPrincipal->setSpacing(0);
-	layoutPrincipal->setVerticalSpacing(0);
+	//layoutPrincipal->setVerticalSpacing(0);
+
+	layout->setVerticalSpacing(0);
 
 	for (int y : range(8))
 	{
@@ -48,7 +55,8 @@ ChessWindow::ChessWindow(QWidget* parent) :
 			QObject::connect(boutons[x][y], &QPushButton::clicked, &chess_, [this, x, y]() { 
 				chess_.caseAppuye(Coordonnees(x, y));
 			});
-			layoutPrincipal->addWidget(boutons[x][y], y, x);
+			//layoutPrincipal->addWidget(boutons[x][y], y, x);
+			layout->addWidget(boutons[x][y], y, x);
 		}
 	}
 
@@ -63,10 +71,29 @@ ChessWindow::ChessWindow(QWidget* parent) :
 	// Un connect qui laisser l utilisateur choisir quel piece avoir qd pion arrive au bout?
 	//CHANGER BOUTONS LISTE POUR GENRE DE MAP DE COORDONNEES??
 
+	auto bottomLayout = new QHBoxLayout(); // Pas possible de donner directement le parent au layout (le constructeur prend un QWidget* et un layout n'en est pas un; on ne peut pas mettre un parent qui a déjà un layout; si on met on parent temporaire, addLayout n'accepte pas de changer le parent).
+	layoutPrincipal->addLayout(bottomLayout);
+	bottomLayout->addSpacing(10);
+	auto label = new QLabel(this);
+	label->setMinimumWidth(100);
+	// On pourrait connecter un slot (on en a un pour l'autre exemple) mais ici c'était simple comme ça et c'est la version avec lambdas.
+	//QObject::connect(&calc_, &Calc::valeurChangee, this, [label](int valeur) {
+	//	label->setText(QString::number(valeur));
+	//	});
+	bottomLayout->addWidget(label);
+	label->setText("White");
+
+	restartButton = new QPushButton(this);
+	restartButton->setFixedSize(150, 50);
+	restartButton->setText("Restart Game");
+	bottomLayout->addWidget(restartButton);
+
 	setCentralWidget(widgetPrincipal);
 	setWindowTitle("Chess");
 
 	afficherPieces();
+
+
 	
 }
 
@@ -126,14 +153,19 @@ void ChessWindow::afficherPieces()
 
 void ChessWindow::finPartie(side loser)
 {
+	QMessageBox message;
 	if (loser == white)
 	{
-		std::cout << "Les blancs sont en echec et math!\n";
+		//std::cout << "Les blancs sont en echec et math!\n";
 		//emit finPartie(white);
+		message.setText("Les blancs sont en echec et math !");
+		message.exec();
 	}
 	else
 	{
-		std::cout << "Les noirs sont en echec et math!\n";
+		//std::cout << "Les noirs sont en echec et math!\n";
+		message.setText("Les noirs sont en echec et math!");
+		message.exec();
 		//emit finPartie(black);
 	}
 }

@@ -23,4 +23,5 @@ private:
 	QPushButton* boutons[8][8];
 	void afficherPieces();
 	void setColor(int x, int y);
+	QPushButton* restartButton;
 };

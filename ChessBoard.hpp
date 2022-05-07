@@ -20,6 +20,8 @@ public:
 	side getTurn();
 	void switchTurn();
 
+	bool getFin() const;
+
 public slots:
 	void caseAppuye(Coordonnees position);
 	void restartPartie();

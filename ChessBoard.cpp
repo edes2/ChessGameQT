@@ -414,3 +414,8 @@ void ChessBoard::updateBoard()
 		}
 	}
 }
+
+bool ChessBoard::getFin() const
+{
+	return fin_;
+}

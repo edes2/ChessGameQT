@@ -24,7 +24,6 @@ TEST(ChessBoard, mouvements)
 	chess.caseAppuye(Coordonnees(4, 4)); // Mouvement
 
 	EXPECT_EQ(chess.tiles[Coordonnees(4, 4)]->getSide(), white);
-	//EXPECT_EQ(chess.tiles[Coordonnees(4, 4)]->getSide(), white);
 
 	chess.caseAppuye(Coordonnees(4, 1)); // Selection
 	chess.caseAppuye(Coordonnees(4, 3)); // Mouvement
@@ -48,64 +47,34 @@ TEST(ChessBoard, mouvements)
 
 	EXPECT_EQ(chess.tiles[Coordonnees(5, 3)], nullptr); // Case vide
 }
-/*
-TEST(Calc, simple) {
-	Calc calc;
-	calc.ajouterChiffre(1);
-	calc.ajouterChiffre(4);
-	calc.ajouterChiffre(3);
-	EXPECT_EQ(calc.obtenirValeur(), 143);
-	calc.effacer();
-	calc.ajouterChiffre(2);
-	calc.ajouterChiffre(1);
-	calc.ajouterChiffre(8);
-	EXPECT_EQ(calc.obtenirValeur(), 218);
-}
 
-TEST(Calc, operations) {
-	Calc calc;
-	calc.ajouterChiffre(1);
-	calc.ajouterChiffre(4);
-	calc.ajouterChiffre(3);
-	calc.operationPlus();
-	calc.ajouterChiffre(2);
-	calc.ajouterChiffre(1);
-	calc.ajouterChiffre(8);
-	calc.operationEgal();
-	EXPECT_EQ(calc.obtenirValeur(), 143 + 218);
-	calc.ajouterChiffre(1);
-	calc.ajouterChiffre(4);
-	calc.ajouterChiffre(3);
-	calc.operationMoins();
-	calc.ajouterChiffre(2);
-	calc.ajouterChiffre(1);
-	calc.ajouterChiffre(8);
-	calc.operationEgal();
-	EXPECT_EQ(calc.obtenirValeur(), 143 - 218);
-}
+TEST(ChessBoard, echecEtMath)
+{
+	ChessBoard chess;
+	chess.initPartie();
 
-TEST(Calc, changement_operation) {
-	Calc calc;
-	calc.ajouterChiffre(1);
-	calc.ajouterChiffre(4);
-	calc.ajouterChiffre(3);
-	calc.operationPlus();
-	calc.operationMoins();
-	calc.ajouterChiffre(2);
-	calc.ajouterChiffre(1);
-	calc.ajouterChiffre(8);
-	calc.operationEgal();
-	EXPECT_EQ(calc.obtenirValeur(), 143 - 218);
-	calc.ajouterChiffre(1);
-	calc.ajouterChiffre(4);
-	calc.ajouterChiffre(3);
-	calc.operationMoins();
-	calc.operationPlus();
-	calc.ajouterChiffre(2);
-	calc.ajouterChiffre(1);
-	calc.ajouterChiffre(8);
-	calc.operationEgal();
-	EXPECT_EQ(calc.obtenirValeur(), 143 + 218);
+	chess.caseAppuye(Coordonnees(4, 6)); // Selection
+	chess.caseAppuye(Coordonnees(4, 4)); // Mouvement
+
+	chess.caseAppuye(Coordonnees(4, 1)); // Selection
+	chess.caseAppuye(Coordonnees(4, 2)); // Mouvement
+
+	chess.caseAppuye(Coordonnees(3, 7)); // Selection
+	chess.caseAppuye(Coordonnees(5, 5)); // Mouvement
+
+	chess.caseAppuye(Coordonnees(4, 2)); // Selection
+	chess.caseAppuye(Coordonnees(4, 3)); // Mouvement
+
+	chess.caseAppuye(Coordonnees(5, 7)); // Selection
+	chess.caseAppuye(Coordonnees(2, 4)); // Mouvement
+
+	chess.caseAppuye(Coordonnees(0, 1)); // Selection
+	chess.caseAppuye(Coordonnees(0, 2)); // Mouvement
+
+	chess.caseAppuye(Coordonnees(5, 5)); // Selection
+	chess.caseAppuye(Coordonnees(5, 1)); // Mouvement
+
+	EXPECT_EQ(chess.getFin(), true);
+
 }
-*/
 #endif

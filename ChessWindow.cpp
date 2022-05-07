@@ -29,7 +29,7 @@ ChessWindow::ChessWindow(QWidget* parent) :
 	auto layout = new QGridLayout(); // Pas possible de donner directement le parent au layout (le constructeur prend un QWidget* et un layout n'en est pas un; on ne peut pas mettre un parent qui a déjà un layout; si on met on parent temporaire, addLayout n'accepte pas de changer le parent).
 	layoutPrincipal->addLayout(layout);
 
-	chess_.initPartie();
+	//chess_.initPartie();
 
 	layoutPrincipal->setSpacing(0);
 	//layoutPrincipal->setVerticalSpacing(0);
@@ -74,26 +74,31 @@ ChessWindow::ChessWindow(QWidget* parent) :
 	auto bottomLayout = new QHBoxLayout(); // Pas possible de donner directement le parent au layout (le constructeur prend un QWidget* et un layout n'en est pas un; on ne peut pas mettre un parent qui a déjà un layout; si on met on parent temporaire, addLayout n'accepte pas de changer le parent).
 	layoutPrincipal->addLayout(bottomLayout);
 	bottomLayout->addSpacing(10);
-	auto label = new QLabel(this);
-	label->setMinimumWidth(100);
+	turnLabel = new QLabel(this);
+	turnLabel->setMinimumWidth(100);
+	//turnLabel->setText
 	// On pourrait connecter un slot (on en a un pour l'autre exemple) mais ici c'était simple comme ça et c'est la version avec lambdas.
 	//QObject::connect(&calc_, &Calc::valeurChangee, this, [label](int valeur) {
 	//	label->setText(QString::number(valeur));
 	//	});
-	bottomLayout->addWidget(label);
-	label->setText("White");
+	bottomLayout->addWidget(turnLabel);
+
+	QObject::connect(&chess_, &ChessBoard::showTurn, this, &ChessWindow::showTurn);
 
 	restartButton = new QPushButton(this);
 	restartButton->setFixedSize(150, 50);
 	restartButton->setText("Restart Game");
 	bottomLayout->addWidget(restartButton);
 
+	//QObject::connect(&chess_, &ChessBoard::restartPartie, this, &ChessWindow::restartPartie);
+	QObject::connect(restartButton, &QPushButton::clicked, &chess_, &ChessBoard::restartPartie);
+
 	setCentralWidget(widgetPrincipal);
 	setWindowTitle("Chess");
 
+	chess_.initPartie();
+
 	afficherPieces();
-
-
 	
 }
 
@@ -112,6 +117,18 @@ void ChessWindow::setColor(int x, int y)
 void ChessWindow::pieceDeplacee()
 {
 	afficherPieces();
+}
+
+void ChessWindow::showTurn(side turn)
+{
+	if (turn == white)
+	{
+		turnLabel->setText("Tour des: Blancs");
+	}
+	else
+	{
+		turnLabel->setText("Tour des: Noirs");
+	}
 }
 
 void ChessWindow::afficherPieces()

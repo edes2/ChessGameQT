@@ -18,10 +18,12 @@ public:
 	void switchTurn();
 public slots: // Lorsque recoit changements de la vue.
 	void caseAppuye(Coordonnees position);
+	void restartPartie();
 signals: // Pour envoyer un signal lorsque le modele a change une valeur
 	void pieceDeplacee();
 	void finPartie(side loser);
 	void selectionPossible(Coordonnees position);
+	void showTurn(side turn);
 private:
 	bool tryMove(Coordonnees destination);
 	bool estEnEchec();
@@ -34,7 +36,7 @@ private:
 	std::shared_ptr<ChessPiece> whiteKing;
 	std::shared_ptr<ChessPiece> blackKing;
 	side turn_;
-	bool gagnantPartie;
+	//bool gagnantPartie;
 	bool estBackup;
 	bool fin;
 };

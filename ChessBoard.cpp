@@ -409,6 +409,24 @@ void ChessBoard::switchTurn()
 	{
 		turn_ = white;
 	}
+	emit showTurn(turn_);
+}
+
+void ChessBoard::restartPartie()
+{
+	//for (auto&& it : tiles)
+	//{
+	//	delete it.second.get();
+	//	//delete it.second;
+	//}
+	tiles.clear();
+	whiteKing = nullptr;
+	blackKing = nullptr;
+	caseSelectionnee = nullptr;
+
+	initPartie();
+
+	emit pieceDeplacee();
 }
 
 // comment faire dans une seule boucle???
@@ -419,6 +437,8 @@ void ChessBoard::initPartie()
 
 	turn_ = white;
 
+	emit showTurn(turn_);
+
 	tiles[Coordonnees(0,0)] = std::make_shared<Rook>();
 
 	tiles[Coordonnees(1, 0)] = std::make_shared<Knight>();
@@ -428,9 +448,11 @@ void ChessBoard::initPartie()
 	tiles[Coordonnees(3, 0)] = std::make_shared<Queen>();
 
 	tiles[Coordonnees(4, 0)] = std::make_shared<King>();
+
 	blackKing = tiles[Coordonnees(4, 0)];
 
 	tiles[Coordonnees(4, 7)] = std::make_shared<King>();
+
 	whiteKing = tiles[Coordonnees(4, 7)];
 
 	tiles[Coordonnees(5, 0)] = std::make_shared<Bishop>();

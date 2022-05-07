@@ -1,5 +1,10 @@
 #include "ChessPiece.hpp"
 
+ChessPiece::ChessPiece() : hasMoved_(false)
+{
+
+}
+
 void ChessPiece::setSide(side side)
 {
 	side_ = side;
@@ -12,12 +17,12 @@ side ChessPiece::getSide() const
 
 bool ChessPiece::getHasMoved() const
 {
-	return hasMoved;
+	return hasMoved_;
 }
 
 void ChessPiece::setHasMoved()
 {
-	hasMoved = true;
+	hasMoved_ = true;
 }
 
 type ChessPiece::getType() const

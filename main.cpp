@@ -1,4 +1,13 @@
-﻿#include "namespace.hpp"
+﻿/**
+* Projet Final
+* Jeu d'echec presque complet avec l echec et math et un moyen de recommencer la partie.
+* \file   main.cpp
+* \author Etienne Desclaux et Clémentine Chailleux
+* \date   06 mai 2022
+* Créé le 20 avril 2022
+*/
+
+#include "namespace.hpp"
 #include "ChessBoard.hpp"
 #include "ChessWindow.hpp"
 
@@ -39,7 +48,7 @@ int main(int argc, char *argv[])
 	QMessageBox message;
 	message.setText("Nouvelle Partie :");
 	message.setInformativeText("Voulez vous commencer une nouvelle partie ?");
-	QPushButton* yesButton = message.addButton(QMessageBox::Yes);//("Yes"), QMessageBox::ActionRole);
+	QPushButton* yesButton = message.addButton(QMessageBox::Yes);
 	QPushButton* noButton = message.addButton(QMessageBox::No);
 	message.setMinimumSize(200, 200);
 	message.exec();
@@ -52,8 +61,4 @@ int main(int argc, char *argv[])
 	else if (message.clickedButton() == noButton) {
 		return 0;
 	}
-
-	//ChessWindow chessWindow;
-	//chessWindow.show();
-	//return app.exec();
 }

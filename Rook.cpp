@@ -3,13 +3,7 @@
 Rook::Rook()
 {
 	type_ = rook;
-	hasMoved = false;
 }
-
-//bool Rook::getHasMoved() const
-//{
-//	return hasMoved;
-//}
 
 bool Rook::estMovementValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
 {
@@ -36,7 +30,7 @@ bool Rook::estMovementValide(Coordonnees destination, std::map<Coordonnees, std:
 			coord.x += i;
 			coord.y += j;
 		}
-		if (!hasMoved) { hasMoved = true; }
+		if (!hasMoved_) { hasMoved_ = true; }
 		return true;
 	}
 	return false;
@@ -53,11 +47,11 @@ bool Rook::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::
 QString Rook::getImagePath() {
 	QString path;
 	if (side_ == white) {
-		path = "50px/WhiteRook.png";
+		path = "images/WhiteRook.png";
 	}
 	else
 	{
-		path = "50px/BlackRook.png";
+		path = "images/BlackRook.png";
 	}
 	return path;
 }

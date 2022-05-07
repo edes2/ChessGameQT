@@ -5,7 +5,6 @@ Knight::Knight()
 	type_ = knight;
 }
 
-// on sait deja que case appuyee est vide
 bool Knight::estMovementValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
 {
 	if ((abs(destination.x - position_.x) == 2) && (abs(destination.y - position_.y) == 1))
@@ -19,7 +18,6 @@ bool Knight::estMovementValide(Coordonnees destination, std::map<Coordonnees, st
 	return false;
 }
 
-// on sait que case appuye est piece
 bool Knight::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
 {
 	if (tiles[destination]->getSide() == side_)
@@ -32,11 +30,11 @@ bool Knight::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std
 QString Knight::getImagePath() {
 	QString path;
 	if (side_ == white) {
-		path = "50px/WhiteKnight.png";
+		path = "images/WhiteKnight.png";
 	}
 	else
 	{
-		path = "50px/BlackKnight.png";
+		path = "images/BlackKnight.png";
 	}
 	return path;
 }

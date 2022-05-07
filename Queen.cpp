@@ -93,11 +93,11 @@ bool Queen::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std:
 QString Queen::getImagePath() {
 	QString path;
 	if (side_ == white) {
-		path = "50px/WhiteQueen.png";
+		path = "images/WhiteQueen.png";
 	}
 	else
 	{
-		path = "50px/BlackQueen.png";
+		path = "images/BlackQueen.png";
 	}
 	return path;
 }

@@ -5,27 +5,6 @@ Pawn::Pawn()
 	type_ = pawn;
 }
 
-//bool Pawn::checkEnPassant(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
-//{
-//	Coordonnees diff(destination.x - position_.x, destination.y - position_.y);
-//	if (abs(diff.x) != 1 || abs(diff.y) != 1) {
-//		return false;
-//	}
-//	if (side_ == white) {
-//		if (tiles[destination.y + 1] && tiles[destination.y + 1]->avanceDeuxCases && (tiles[destination.y - 1]->getSide() != side_))
-//		{
-//			return true;
-//		}
-//	}
-//	else {
-//		if (tiles[destination.y - 1] && tiles[destination.y - 1]->avanceDeuxCases && (tiles[destination.y - 1]->getSide() != side_))
-//		{
-//			return true;
-//		}
-//	}
-//	return false;
-//}
-
 bool Pawn::estMovementValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
 {
 	if (destination.x == position_.x)
@@ -36,7 +15,6 @@ bool Pawn::estMovementValide(Coordonnees destination, std::map<Coordonnees, std:
 			{
 				if (destination.y >= position_.y - 2 && !tiles[Coordonnees(position_.x, position_.y - 1)])
 				{
-					//avanceDeuxCases = true;
 					return true;
 				}
 			}
@@ -44,7 +22,6 @@ bool Pawn::estMovementValide(Coordonnees destination, std::map<Coordonnees, std:
 			{
 				if (destination.y == position_.y - 1)
 				{
-					//avanceDeuxCases = false; //////////////// il faut le mettre a false apres 1 tour direct !!!!!!
 					return true;
 				}
 			}
@@ -55,7 +32,6 @@ bool Pawn::estMovementValide(Coordonnees destination, std::map<Coordonnees, std:
 			{
 				if (destination.y <= position_.y + 2 && !tiles[Coordonnees(position_.x,position_.y+1)])
 				{
-					//avanceDeuxCases = true;
 					return true;
 				}
 			}
@@ -97,11 +73,11 @@ bool Pawn::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::
 QString Pawn::getImagePath() {
 	QString path;
 	if (side_ == white) {
-		path = "50px/WhitePawn.png";
+		path = "images/WhitePawn.png";
 	}
 	else
 	{
-		path = "50px/BlackPawn.png";
+		path = "images/BlackPawn.png";
 	}
 	return path;
 }

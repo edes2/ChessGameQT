@@ -11,32 +11,41 @@
 class ChessBoard : public QObject {
 	Q_OBJECT
 public:
-	ChessBoard() = default; //{ estBackup = false; };// = default;
+	ChessBoard() = default;
+
+	std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles; // Pour que ce soit facile d acces
+
 	void initPartie();
-	std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles;
+
 	side getTurn();
 	void switchTurn();
-public slots: // Lorsque recoit changements de la vue.
+
+public slots:
 	void caseAppuye(Coordonnees position);
 	void restartPartie();
-signals: // Pour envoyer un signal lorsque le modele a change une valeur
+signals:
 	void pieceDeplacee();
 	void finPartie(side loser);
 	void selectionPossible(Coordonnees position);
 	void showTurn(side turn);
 private:
 	bool tryMove(Coordonnees destination);
+	bool tryCastling(Coordonnees position);
+
 	bool estEnEchec();
 	bool estEnEchecEtMath();
+
 	void partieTerminee();
 	void updateBoard();
+
 	void mouvementsPossibles();
-	bool tryCastling(Coordonnees position);
+	
 	std::shared_ptr<Coordonnees> caseSelectionnee;
 	std::shared_ptr<ChessPiece> whiteKing;
 	std::shared_ptr<ChessPiece> blackKing;
+
 	side turn_;
-	//bool gagnantPartie;
-	bool estBackup;
-	bool fin;
+
+	bool estBackup_;
+	bool fin_;
 };

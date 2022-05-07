@@ -22,34 +22,29 @@ void ChessBoard::caseAppuye(Coordonnees position)
 		if ((*caseSelectionnee) == position)
 		{
 			caseSelectionnee = nullptr;
-			std::cout << "Deselection case: \n";
 			emit pieceDeplacee();
 		}
 		else
 		{
-			//tryMove(position);
 			if (tryMove(position))
 			{
-				if (tiles[position] && !tiles[position]->getHasMoved()) // Si c est un castling, c est une case vide a tiles[position]
+				if (tiles[position] && !tiles[position]->getHasMoved())
 				{
 					tiles[position]->setHasMoved();
 				}
-				std::cout << "move done\n";
 				switchTurn();
-				if (estEnEchec()) // On a switch de turn.
+				if (estEnEchec())
 				{
-					if (estEnEchecEtMath()) //je dois faire une fonction dans le roi !!!
+					if (estEnEchecEtMath())
 					{
-						//std::cout << "echec et math\n";
-						fin=true;
+						fin_=true;
 					}
 				}
 				updateBoard();
 			}
-			std::cout << "Deselection case: \n";
 			caseSelectionnee = nullptr;
 			emit pieceDeplacee();
-			if (fin)
+			if (fin_)
 			{
 				partieTerminee();
 			}
@@ -60,8 +55,6 @@ void ChessBoard::caseAppuye(Coordonnees position)
 		if (tiles[position] && tiles[position]->getSide() == turn_)
 		{
 			caseSelectionnee = std::make_shared<Coordonnees>(position);
-			std::cout << "Nouvelle selection d'une case: \n";
-			std::cout << "X: " << (*caseSelectionnee).x << ", Y: " << (*caseSelectionnee).y << std::endl;
 			mouvementsPossibles();
 		}
 	}
@@ -82,12 +75,12 @@ void ChessBoard::mouvementsPossibles()
 			}
 			if (tiles[coord] && tiles[*caseSelectionnee]->getType() == king && tiles[coord]->getType() == rook)
 			{
-				estBackup = true;
+				estBackup_ = true;
 				if (tryMove(coord))
 				{
 					emit selectionPossible(coord);
 				}
-				estBackup = false;
+				estBackup_ = false;
 			}
 			else {
 				if (tryMove(coord))
@@ -101,7 +94,6 @@ void ChessBoard::mouvementsPossibles()
 						tiles[coord] = move(backup);
 						tiles[coord]->updatePos(coord);
 					}
-					// EMIT ? CASE EN BLEUE
 					emit selectionPossible(coord);
 				}
 			}
@@ -112,14 +104,11 @@ void ChessBoard::mouvementsPossibles()
 
 bool ChessBoard::tryMove(Coordonnees destination)
 {
-	//estEnEchec();
 	if (tiles[destination])
 	{
-		//if ((tiles[*caseSelectionnee]->getSide() != tiles[destination]->getSide()) 
-		//	&& tiles[*caseSelectionnee]->estAttaqueValide(destination, tiles))
 		if (tiles[*caseSelectionnee]->estAttaqueValide(destination, tiles))
 		{
-			if (tiles[*caseSelectionnee]->getType() == king && tiles[destination]->getType() == rook)//rook && king//checkCastling(destination))
+			if (tiles[*caseSelectionnee]->getType() == king && tiles[destination]->getType() == rook)
 			{
 				if (tryCastling(destination))
 				{
@@ -130,15 +119,13 @@ bool ChessBoard::tryMove(Coordonnees destination)
 					return false;
 				}
 			}
-			std::shared_ptr<ChessPiece> backup = tiles[destination]; // Pour echec
+			std::shared_ptr<ChessPiece> backup = tiles[destination];
 
 			tiles[destination] = move(tiles[*caseSelectionnee]);
-			tiles[destination]->updatePos(destination); // Update manuellement pos ?pour si roi
+			tiles[destination]->updatePos(destination);
 
 			if (estEnEchec())
 			{
-				//Revenir en arriere
-				std::cout << "Attaque not valid, echec \n";
 				tiles[*caseSelectionnee] = move(tiles[destination]);
 				tiles[*caseSelectionnee]->updatePos(*caseSelectionnee);
 
@@ -147,9 +134,6 @@ bool ChessBoard::tryMove(Coordonnees destination)
 				return false;
 			}
 			else {
-				std::cout << "Attaque\n";
-				//switchTurn();
-				//emit pieceDeplacee();
 				return true;
 			}
 		}
@@ -159,25 +143,14 @@ bool ChessBoard::tryMove(Coordonnees destination)
 		if (tiles[*caseSelectionnee]->estMovementValide(destination, tiles))
 		{
 			tiles[destination] = move(tiles[*caseSelectionnee]);
-			//std::shared_ptr<ChessPiece> backup = tiles[destination]; // Pour echec
-			tiles[destination]->updatePos(destination); // Update manuellement pos ?pour si roi
+			tiles[destination]->updatePos(destination);
 			if (estEnEchec())
 			{
-				//Revenir en arriere
-				std::cout << "Move not valid, echec \n";
 				tiles[*caseSelectionnee] = move(tiles[destination]);
 				tiles[*caseSelectionnee]->updatePos(*caseSelectionnee);
-				//tiles[destination] = backup;
 				return false;
 			}
 			else {
-				//switchTurn();
-
-				std::cout << "Mouvement d'une piece: \n";
-				std::cout << "X: " << (*caseSelectionnee).x << ", Y: " << (*caseSelectionnee).y << std::endl;
-				std::cout << "Vers case: \n";
-				std::cout << "X: " << destination.x << ", Y: " << destination.y << std::endl;
-				//emit pieceDeplacee();
 				return true;
 			}			
 		}
@@ -187,27 +160,23 @@ bool ChessBoard::tryMove(Coordonnees destination)
 
 bool ChessBoard::tryCastling(Coordonnees position)
 {
-	// verifier si le king est deja en echec
 	if (estEnEchec())
 	{
 		return false;
 	}
 	Coordonnees diff(position.x - (*caseSelectionnee).x, position.y - (*caseSelectionnee).y);
-	//std::shared_ptr<ChessPiece> backup = tiles[position]; //backup position du rook
 
 	Coordonnees nouvelleposKing((*caseSelectionnee).x, (*caseSelectionnee).y);
 	Coordonnees nouvelleposRook(position.x, position.y);
-	if (diff.x > 0) //rook de droite
+	if (diff.x > 0)
 	{
 		nouvelleposKing.x = (*caseSelectionnee).x + 2;
-		nouvelleposRook.x = position.x - 2;//(position.x - 2, position.y);
+		nouvelleposRook.x = position.x - 2;
 	}
 	else
 	{
 		nouvelleposKing.x = (*caseSelectionnee).x - 2;
-		//nouvelleposKing((*caseSelectionnee).x - 2, (*caseSelectionnee).y);
 		nouvelleposRook.x = position.x + 3;
-		//nouvelleposRook(position.x + 3, position.y);
 	}
 	tiles[nouvelleposKing] = move(tiles[*caseSelectionnee]);
 	tiles[nouvelleposKing]->updatePos(nouvelleposKing);
@@ -217,8 +186,6 @@ bool ChessBoard::tryCastling(Coordonnees position)
 
 	if (estEnEchec())
 	{
-		//Revenir en arriere
-		std::cout << "castling not valid, echec \n";
 		tiles[*caseSelectionnee] = move(tiles[nouvelleposKing]);
 		tiles[*caseSelectionnee]->updatePos(*caseSelectionnee);
 
@@ -227,10 +194,7 @@ bool ChessBoard::tryCastling(Coordonnees position)
 		return false;
 	}
 	else {
-		std::cout << "Castling!\n";
-		//switchTurn();
-		//emit pieceDeplacee();
-		if (estBackup) //var bool
+		if (estBackup_)
 		{
 			tiles[*caseSelectionnee] = move(tiles[nouvelleposKing]);
 			tiles[*caseSelectionnee]->updatePos(*caseSelectionnee);
@@ -249,13 +213,8 @@ bool ChessBoard::tryCastling(Coordonnees position)
 
 bool ChessBoard::estEnEchecEtMath()
 {
-	//bool blancEchecMath=true;
 	std::shared_ptr<ChessPiece> backup;
-	// On check si blanc en echec et math
-	//if (!estEnEchec()) {
-	//	//blancEchecMath = false;
-	//	return false;
-	//}
+
 	for (int y : range(8))
 	{
 		for (int x : range(8))
@@ -269,9 +228,8 @@ bool ChessBoard::estEnEchecEtMath()
 					{
 
 						backup = tiles[Coordonnees(i, j)];
-						if (tryMove(Coordonnees(i, j))) // Coordonnees(i,j) != Coordonnees(x,y) && 
+						if (tryMove(Coordonnees(i, j)))
 						{
-							//On revient en arriere
 							tiles[*caseSelectionnee] = move(tiles[Coordonnees(i, j)]);
 							tiles[*caseSelectionnee]->updatePos(*caseSelectionnee);
 
@@ -280,7 +238,7 @@ bool ChessBoard::estEnEchecEtMath()
 							{
 								tiles[Coordonnees(i, j)]->updatePos(Coordonnees(i, j));
 							}
-							return false; // Il y a une solution possible !
+							return false;
 
 						}
 					}
@@ -289,73 +247,6 @@ bool ChessBoard::estEnEchecEtMath()
 		}
 	}
 	return true;
-	/*
-	std::shared_ptr<Coordonnees> backup = caseSelectionnee;
-	std::shared_ptr<ChessPiece> backupPiece;
-	bool EchecMathWhite = true;
-	bool EchecMathBlack = true;
-	for (int i = -1; i <= 1; i++)
-	{
-		for (int j = -1; i <= 1; i++)
-		{
-			caseSelectionnee = std::make_shared<Coordonnees>(whiteKing->getPos());
-			///
-			Coordonnees destination(whiteKing->getPos().x + i, whiteKing->getPos().y + j);
-			if ((tiles[destination] == nullptr) || (tiles[destination]->getSide() != whiteKing->getSide()))
-			{
-				if (tiles[destination])
-				{
-					backupPiece = tiles[destination];
-				}
-				tiles[destination] = move(tiles[*caseSelectionnee]);
-				tiles[destination]->updatePos(destination);
-				if (!estEnEchec())
-				{
-					EchecMathWhite = false;
-					//return false; // il y a une way out
-				}
-				// On revient en arriere.
-				tiles[*caseSelectionnee] = move(tiles[destination]);
-				tiles[*caseSelectionnee]->updatePos(*caseSelectionnee);
-				if (backupPiece)
-				{
-					tiles[destination] = move(backupPiece);
-					tiles[destination]->updatePos(destination);
-				}
-			}
-			
-			// Black King
-			caseSelectionnee = std::make_shared<Coordonnees>(blackKing->getPos());
-			///
-			destination = Coordonnees(blackKing->getPos().x + i, blackKing->getPos().y + j);
-			if ((tiles[destination] == nullptr) || (tiles[destination]->getSide() != blackKing->getSide()))
-			{
-				if (tiles[destination])
-				{
-					backupPiece = tiles[destination];
-				}
-				tiles[destination] = move(tiles[*caseSelectionnee]);
-				tiles[destination]->updatePos(destination);
-				if (!estEnEchec())
-				{
-					EchecMathBlack = false;
-					//return false; // il y a une way out
-				}
-				// On revient en arriere.
-				tiles[*caseSelectionnee] = move(tiles[destination]);
-				tiles[*caseSelectionnee]->updatePos(*caseSelectionnee);
-				if (backupPiece)
-				{
-					tiles[destination] = move(backupPiece);
-					tiles[destination]->updatePos(destination);
-				}
-			}
-		}
-	}
-	if (EchecMathBlack) { std::cout << "Echec et Math roi noir\n"; };
-	if (EchecMathWhite) { std::cout << "Echec et Math roi blanc\n"; };
-	//caseSelectionnee = backup;
-	*/
 }
 
 bool ChessBoard::estEnEchec()
@@ -376,16 +267,10 @@ bool ChessBoard::estEnEchec()
 			Coordonnees coord(x, y);
 			if (tiles[coord])
 			{
-				//if (tiles[coord] == whiteKing || tiles[coord] == blackKing) {
-				//	//skip?
-				//	int a = 0;
-				//}
-				if (tiles[coord]->getSide() != turn_) // Piece enemie
+				if (tiles[coord]->getSide() != turn_)
 				{
 					if (tiles[coord]->estAttaqueValide(king->getPos(), tiles))
 					{
-						std::cout << "Roi en echec\n";
-
 						return true;
 					}
 				}
@@ -414,11 +299,6 @@ void ChessBoard::switchTurn()
 
 void ChessBoard::restartPartie()
 {
-	//for (auto&& it : tiles)
-	//{
-	//	delete it.second.get();
-	//	//delete it.second;
-	//}
 	tiles.clear();
 	whiteKing = nullptr;
 	blackKing = nullptr;
@@ -429,11 +309,10 @@ void ChessBoard::restartPartie()
 	emit pieceDeplacee();
 }
 
-// comment faire dans une seule boucle???
 void ChessBoard::initPartie()
 {
-	estBackup = false; // Pour percevoir les mouvements a l avance.
-	fin = false; // Pour savoir quand la partie est finie
+	estBackup_ = false; // Pour percevoir les mouvements a l avance.
+	fin_ = false; // Pour savoir quand la partie est finie
 
 	turn_ = white;
 
@@ -513,12 +392,10 @@ void ChessBoard::partieTerminee()
 	side losingSide = turn_;
 	if (losingSide == white)
 	{
-		//std::cout << "Les blancs sont en echec et math!\n";
 		emit finPartie(white);
 	}
 	else
 	{
-		//std::cout << "Les noirs sont en echec et math!\n";
 		emit finPartie(black);
 	}
 }
@@ -536,5 +413,4 @@ void ChessBoard::updateBoard()
 			}
 		}
 	}
-	//emit pieceDeplacee();
 }

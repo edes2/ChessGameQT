@@ -9,20 +9,10 @@ public:
 	bool operator==(const Coordonnees& other) const;
 
 	Coordonnees& operator=(const Coordonnees& other);
-	//bool operator==(const Coordonnees& other) const
-	//{
-	//	if (other.x == x && other.y == y)
-	//	{
-	//		return true;
-	//	}
-	//	else {
-	//		return false;
-	//	}
-	//}
 	Coordonnees& operator-(const Coordonnees& other);
 
 	bool operator<(const Coordonnees& coord) const;
 
-	int x;
+	int x; // Public afin qu'ils soient faciles a acceder.
 	int y;
 };

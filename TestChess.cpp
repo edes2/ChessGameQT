@@ -14,7 +14,7 @@
 TEST(ChessBoard, mouvements)
 {
 	ChessBoard chess;
-	chess.initPartie();
+	chess.initGame();
 
 	EXPECT_EQ(chess.mTiles[Coordinates(7, 7)]->getSide(), white);
 	EXPECT_EQ(chess.mTiles[Coordinates(5, 0)]->getSide(), black);
@@ -51,7 +51,7 @@ TEST(ChessBoard, mouvements)
 TEST(ChessBoard, echecEtMath)
 {
 	ChessBoard chess;
-	chess.initPartie();
+	chess.initGame();
 
 	chess.caseAppuye(Coordinates(4, 6)); // Selection
 	chess.caseAppuye(Coordinates(4, 4)); // Mouvement
@@ -74,7 +74,7 @@ TEST(ChessBoard, echecEtMath)
 	chess.caseAppuye(Coordinates(5, 5)); // Selection
 	chess.caseAppuye(Coordinates(5, 1)); // Mouvement
 
-	EXPECT_EQ(chess.getFin(), true);
+	EXPECT_EQ(chess.getEnd(), true);
 
 }
 #endif

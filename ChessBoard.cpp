@@ -47,7 +47,7 @@ void ChessBoard::caseAppuye(Coordinates iPosition)
 			emit pieceDeplacee();
 			if (mFin)
 			{
-				partieTerminee();
+				gameOver();
 			}
 		}
 	}
@@ -95,12 +95,12 @@ void ChessBoard::mouvementsPossibles()
 			}
 			if (mTiles[coord] && mTiles[*pCaseSelectionnee]->getType() == king && mTiles[coord]->getType() == rook)
 			{
-				mEstBackup = true;
+				mIsBackup = true;
 				if (tryMove(coord))
 				{
 					emit selectionPossible(coord);
 				}
-				mEstBackup = false;
+				mIsBackup = false;
 			}
 			else {
 				if (tryMove(coord))
@@ -214,7 +214,7 @@ bool ChessBoard::tryCastling(Coordinates position)
 		return false;
 	}
 	else {
-		if (mEstBackup)
+		if (mIsBackup)
 		{
 			mTiles[*pCaseSelectionnee] = move(mTiles[nouvelleposKing]);
 			mTiles[*pCaseSelectionnee]->updatePos(*pCaseSelectionnee);
@@ -317,21 +317,21 @@ void ChessBoard::switchTurn()
 	emit showTurn(mTurn);
 }
 
-void ChessBoard::restartPartie()
+void ChessBoard::restartGame()
 {
 	mTiles.clear();
 	pWhiteKing = nullptr;
 	pBlackKing = nullptr;
 	pCaseSelectionnee = nullptr;
 
-	initPartie();
+	initGame();
 
 	emit pieceDeplacee();
 }
 
-void ChessBoard::initPartie()
+void ChessBoard::initGame()
 {
-	mEstBackup = false; // Pour percevoir les mouvements a l avance.
+	mIsBackup = false; // Pour percevoir les mouvements a l avance.
 	mFin = false; // Pour savoir quand la partie est finie
 
 	mTurn = white;
@@ -407,7 +407,7 @@ void ChessBoard::initPartie()
 	}
 }
 
-void ChessBoard::partieTerminee()
+void ChessBoard::gameOver()
 {
 	side losingSide = mTurn;
 	if (losingSide == white)
@@ -435,7 +435,7 @@ void ChessBoard::updateBoard()
 	}
 }
 
-bool ChessBoard::getFin() const
+bool ChessBoard::getEnd() const
 {
 	return mFin;
 }

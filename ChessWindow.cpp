@@ -38,14 +38,14 @@ ChessWindow::ChessWindow(QWidget* parent) :
 	{
 		for (int x : range(8))
 		{
-			pBoutons[x][y] = new QPushButton(this);
-			pBoutons[x][y]->setFixedSize(80,80);
+			pButtons[x][y] = new QPushButton(this);
+			pButtons[x][y]->setFixedSize(80,80);
 			setColor(x, y);
-			pBoutons[x][y]->setIconSize(QSize(80, 80));
-			QObject::connect(pBoutons[x][y], &QPushButton::clicked, &mChess, [this, x, y]() { 
+			pButtons[x][y]->setIconSize(QSize(80, 80));
+			QObject::connect(pButtons[x][y], &QPushButton::clicked, &mChess, [this, x, y]() { 
 				mChess.caseAppuye(Coordinates(x, y));
 			});
-			layout->addWidget(pBoutons[x][y], y, x);
+			layout->addWidget(pButtons[x][y], y, x);
 		}
 	}
 
@@ -71,14 +71,14 @@ ChessWindow::ChessWindow(QWidget* parent) :
 	pRestartButton->setText("Restart Game");
 	bottomLayout->addWidget(pRestartButton);
 
-	QObject::connect(pRestartButton, &QPushButton::clicked, &mChess, &ChessBoard::restartPartie);
+	QObject::connect(pRestartButton, &QPushButton::clicked, &mChess, &ChessBoard::restartGame);
 
 	setCentralWidget(widgetPrincipal);
 	setWindowTitle("Chess");
 
-	mChess.initPartie();
+	mChess.initGame();
 
-	afficherPieces();
+	showPieces();
 	
 }
 
@@ -86,17 +86,17 @@ void ChessWindow::setColor(int x, int y)
 {
 	if ((x + y) % 2 == 0)
 	{
-		pBoutons[x][y]->setStyleSheet("border: 0px ; background-color:#EEEED2;");
+		pButtons[x][y]->setStyleSheet("border: 0px ; background-color:#EEEED2;");
 	}
 	else
 	{
-		pBoutons[x][y]->setStyleSheet("border: 0px ; background-color:#769656;");
+		pButtons[x][y]->setStyleSheet("border: 0px ; background-color:#769656;");
 	}
 }
 
 void ChessWindow::pieceDeplacee()
 {
-	afficherPieces();
+	showPieces();
 }
 
 void ChessWindow::showTurn(side turn)
@@ -111,7 +111,7 @@ void ChessWindow::showTurn(side turn)
 	}
 }
 
-void ChessWindow::afficherPieces()
+void ChessWindow::showPieces()
 {
 	for (int y : range(8))
 	{
@@ -124,11 +124,11 @@ void ChessWindow::afficherPieces()
 				QString path = mChess.mTiles[position]->getImagePath();
 				QPixmap pixmap(path);
 				QIcon iconBack(pixmap);
-				pBoutons[x][y]->setIcon(iconBack);
+				pButtons[x][y]->setIcon(iconBack);
 			}
 			else
 			{
-				pBoutons[x][y]->setIcon(QIcon());
+				pButtons[x][y]->setIcon(QIcon());
 			}
 		}
 	}
@@ -153,7 +153,7 @@ void ChessWindow::selectionPossible(Coordinates position)
 {
 	int x = position.x;
 	int y = position.y;
-	pBoutons[x][y]->setStyleSheet("border: 0px ; background-color:#e6d27a;");
+	pButtons[x][y]->setStyleSheet("border: 0px ; background-color:#e6d27a;");
 }
 
 void ChessWindow::inputPawnTranform(Coordinates iPosition)

@@ -13,21 +13,20 @@ class ChessBoard : public QObject {
 public:
 	ChessBoard() = default;
 
-	std::map<Coordinates, std::shared_ptr<ChessPiece>> mTiles; // Pour que ce soit facile d acces
+	std::map<Coordinates, std::shared_ptr<ChessPiece>> mTiles; // Made public for ease of access
 
-	void initPartie();
+	void initGame();
 
 	side getTurn();
 	void switchTurn();
 
-	bool getFin() const;
+	bool getEnd() const;
 
 	void pawnTranform(const QString& sPieceType, Coordinates iPosition);
 
 public slots:
 	void caseAppuye(Coordinates iPosition);
-	void restartPartie();
-	//void pawnTranform(side iSide);
+	void restartGame();
 signals:
 	void pieceDeplacee();
 	void finPartie(side loser);
@@ -44,7 +43,7 @@ private:
 
 	void checkPawnTransform(Coordinates iPosition);
 
-	void partieTerminee();
+	void gameOver();
 	void updateBoard();
 
 	void mouvementsPossibles();
@@ -55,6 +54,7 @@ private:
 
 	side mTurn;
 
-	bool mEstBackup;
+	bool mIsBackup;
 	bool mFin;
+	bool mPawnTwoTiles;
 };

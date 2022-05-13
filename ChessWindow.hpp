@@ -19,11 +19,10 @@ public slots:
 	void selectionPossible(Coordinates position);
 	void showTurn(side turn);
 	void inputPawnTranform(Coordinates iPosition);
-signals:
 private:
-	ChessBoard mChess;  // Le Modèle
-	QPushButton* pBoutons[8][8];
-	void afficherPieces();
+	ChessBoard mChess;  // The Model
+	QPushButton* pButtons[8][8];
+	void showPieces();
 	void setColor(int x, int y);
 	QPushButton* pRestartButton;
 	QLabel* pTurnLabel;

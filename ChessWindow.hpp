@@ -16,8 +16,10 @@ public:
 public slots:
 	void pieceDeplacee();
 	void finPartie(side loser);
-	void selectionPossible(Coordonnees position);
+	void selectionPossible(Coordinates position);
 	void showTurn(side turn);
+	void inputPawnTranform(Coordinates iPosition);
+signals:
 private:
 	ChessBoard mChess;  // Le Modèle
 	QPushButton* pBoutons[8][8];

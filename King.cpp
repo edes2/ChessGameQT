@@ -9,7 +9,7 @@ King::~King()
 {
 }
 
-bool King::estMovementValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
+bool King::estMovementValide(Coordinates destination, std::map<Coordinates, std::shared_ptr<ChessPiece>> tiles)
 {
 	if ((abs(destination.x - mPosition.x) <= 1) && (abs(destination.y - mPosition.y) <= 1))
 	{
@@ -17,7 +17,7 @@ bool King::estMovementValide(Coordonnees destination, std::map<Coordonnees, std:
 	}
 	return false;
 }
-bool King::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
+bool King::estAttaqueValide(Coordinates destination, std::map<Coordinates, std::shared_ptr<ChessPiece>> tiles)
 {
 	// Castling
 	if (!mHasMoved) 
@@ -27,7 +27,7 @@ bool King::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::
 		{
 			if (tiles[destination]->getHasMoved() == false)
 			{
-				Coordonnees diff(destination.x - mPosition.x, destination.y - mPosition.y);
+				Coordinates diff(destination.x - mPosition.x, destination.y - mPosition.y);
 				if (diff.y == 0)
 				{
 					int i = 0;
@@ -37,7 +37,7 @@ bool King::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::
 						i = diff.x / abs(diff.x) * -1;
 					}
 
-					Coordonnees coord(destination.x, destination.y);
+					Coordinates coord(destination.x, destination.y);
 					while (coord.x != mPosition.x || coord.y != mPosition.y)
 					{
 						if (tiles[coord] && tiles[coord] != tiles[destination])

@@ -2,7 +2,7 @@
 
 #include <QString>
 #include "namespace.hpp"
-#include "Coordonnees.hpp"
+#include "Coordinates.hpp"
 #include <map>
 
 class ChessPiece {
@@ -15,14 +15,15 @@ public:
 	side getSide() const;
 	virtual void setSide(side side);
 
-	virtual bool estMovementValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles) = 0;
-	virtual bool estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles) = 0;
+	virtual bool estMovementValide(Coordinates destination, std::map<Coordinates, std::shared_ptr<ChessPiece>> tiles) = 0;
+	virtual bool estAttaqueValide(Coordinates destination, std::map<Coordinates, std::shared_ptr<ChessPiece>> tiles) = 0;
 	
-	virtual void updatePos(Coordonnees position);
+	virtual void updatePos(Coordinates position);
 
-	Coordonnees getPos() const;
+	Coordinates getPos() const;
 
 	type getType() const;
+	void setType(type iType);
 
 	bool getHasMoved() const;
 	void setHasMoved();
@@ -31,7 +32,7 @@ protected:
 	side mSide;
 	type mType;
 
-	Coordonnees mPosition;
+	Coordinates mPosition;
 
 	bool mHasMoved;
 };

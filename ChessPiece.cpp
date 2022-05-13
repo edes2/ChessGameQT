@@ -30,12 +30,17 @@ type ChessPiece::getType() const
 	return mType;
 }
 
-void ChessPiece::updatePos(Coordonnees position)
+void ChessPiece::setType(type iType)
+{
+	mType = iType;
+}
+
+void ChessPiece::updatePos(Coordinates position)
 {
 	mPosition = position;
 }
 
-Coordonnees ChessPiece::getPos() const
+Coordinates ChessPiece::getPos() const
 {
 	return mPosition;
 }

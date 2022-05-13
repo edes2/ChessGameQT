@@ -15,7 +15,7 @@
 
 using iter::range;
 
-void ChessBoard::caseAppuye(Coordonnees iPosition)
+void ChessBoard::caseAppuye(Coordinates iPosition)
 {
 	if (pCaseSelectionnee)
 	{
@@ -32,6 +32,7 @@ void ChessBoard::caseAppuye(Coordonnees iPosition)
 				{
 					mTiles[iPosition]->setHasMoved();
 				}
+				checkPawnTransform(iPosition);
 				switchTurn();
 				if (estEnEchec())
 				{
@@ -54,10 +55,29 @@ void ChessBoard::caseAppuye(Coordonnees iPosition)
 	{
 		if (mTiles[iPosition] && mTiles[iPosition]->getSide() == mTurn)
 		{
-			pCaseSelectionnee = std::make_shared<Coordonnees>(iPosition);
+			pCaseSelectionnee = std::make_shared<Coordinates>(iPosition);
 			mouvementsPossibles();
 		}
 	}
+}
+
+void ChessBoard::checkPawnTransform(Coordinates iPosition)
+{
+	if (mTiles[iPosition] && mTiles[iPosition]->getType() == pawn && (iPosition.y == 7 || iPosition.y == 0))
+	{
+		emit inputPawnTranform(iPosition);
+	}
+}
+
+void ChessBoard::pawnTranform(const QString& sPieceType, Coordinates iPosition)
+{
+	if (sPieceType == "Queen") { mTiles[iPosition] = std::make_shared<Queen>(); }
+	else if (sPieceType=="Bishop") { mTiles[iPosition] = std::make_shared<Bishop>(); }
+	else if (sPieceType == "Knight") { mTiles[iPosition] = std::make_shared<Knight>(); }
+	else if (sPieceType == "Rook") { mTiles[iPosition] = std::make_shared<Rook>(); }
+	mTiles[iPosition]->updatePos(iPosition);
+	mTiles[iPosition]->setHasMoved();
+	mTiles[iPosition]->setSide(mTurn);
 }
 
 void ChessBoard::mouvementsPossibles()
@@ -68,7 +88,7 @@ void ChessBoard::mouvementsPossibles()
 		for (int x : range(8))
 		{
 			backup = nullptr;
-			Coordonnees coord(x, y);
+			Coordinates coord(x, y);
 			if (mTiles[coord])
 			{
 				backup = mTiles[coord];
@@ -102,13 +122,13 @@ void ChessBoard::mouvementsPossibles()
 	emit selectionPossible(*pCaseSelectionnee);
 }
 
-bool ChessBoard::tryMove(Coordonnees destination)
+bool ChessBoard::tryMove(Coordinates destination)
 {
 	if (mTiles[destination])
 	{
 		if (mTiles[*pCaseSelectionnee]->estAttaqueValide(destination, mTiles))
 		{
-			if (mTiles[*pCaseSelectionnee]->getType() == king && mTiles[destination]->getType() == rook)
+			if (mTiles[*pCaseSelectionnee]->getType() == king && mTiles[destination]->getType() == rook && mTiles[destination]->getSide() == mTiles[destination]->getSide())
 			{
 				if (tryCastling(destination))
 				{
@@ -158,16 +178,16 @@ bool ChessBoard::tryMove(Coordonnees destination)
 	return false;
 }
 
-bool ChessBoard::tryCastling(Coordonnees position)
+bool ChessBoard::tryCastling(Coordinates position)
 {
 	if (estEnEchec())
 	{
 		return false;
 	}
-	Coordonnees diff(position.x - (*pCaseSelectionnee).x, position.y - (*pCaseSelectionnee).y);
+	Coordinates diff(position.x - (*pCaseSelectionnee).x, position.y - (*pCaseSelectionnee).y);
 
-	Coordonnees nouvelleposKing((*pCaseSelectionnee).x, (*pCaseSelectionnee).y);
-	Coordonnees nouvelleposRook(position.x, position.y);
+	Coordinates nouvelleposKing((*pCaseSelectionnee).x, (*pCaseSelectionnee).y);
+	Coordinates nouvelleposRook(position.x, position.y);
 	if (diff.x > 0)
 	{
 		nouvelleposKing.x = (*pCaseSelectionnee).x + 2;
@@ -219,24 +239,24 @@ bool ChessBoard::estEnEchecEtMath()
 	{
 		for (int x : range(8))
 		{
-			if (mTiles[Coordonnees(x, y)] && mTiles[Coordonnees(x, y)]->getSide() == mTurn)
+			if (mTiles[Coordinates(x, y)] && mTiles[Coordinates(x, y)]->getSide() == mTurn)
 			{
-				pCaseSelectionnee = std::make_shared<Coordonnees>(Coordonnees(x, y));
+				pCaseSelectionnee = std::make_shared<Coordinates>(Coordinates(x, y));
 				for (int j : range(8))
 				{
 					for (int i : range(8))
 					{
 
-						backup = mTiles[Coordonnees(i, j)];
-						if (tryMove(Coordonnees(i, j)))
+						backup = mTiles[Coordinates(i, j)];
+						if (tryMove(Coordinates(i, j)))
 						{
-							mTiles[*pCaseSelectionnee] = move(mTiles[Coordonnees(i, j)]);
+							mTiles[*pCaseSelectionnee] = move(mTiles[Coordinates(i, j)]);
 							mTiles[*pCaseSelectionnee]->updatePos(*pCaseSelectionnee);
 
-							mTiles[Coordonnees(i, j)] = move(backup);
-							if (mTiles[Coordonnees(i, j)])
+							mTiles[Coordinates(i, j)] = move(backup);
+							if (mTiles[Coordinates(i, j)])
 							{
-								mTiles[Coordonnees(i, j)]->updatePos(Coordonnees(i, j));
+								mTiles[Coordinates(i, j)]->updatePos(Coordinates(i, j));
 							}
 							return false;
 
@@ -264,7 +284,7 @@ bool ChessBoard::estEnEchec()
 	{
 		for (int x : range(8))
 		{
-			Coordonnees coord(x, y);
+			Coordinates coord(x, y);
 			if (mTiles[coord])
 			{
 				if (mTiles[coord]->getSide() != mTurn)
@@ -318,48 +338,48 @@ void ChessBoard::initPartie()
 
 	emit showTurn(mTurn);
 
-	mTiles[Coordonnees(0,0)] = std::make_shared<Rook>();
+	mTiles[Coordinates(0,0)] = std::make_shared<Rook>();
 
-	mTiles[Coordonnees(1, 0)] = std::make_shared<Knight>();
+	mTiles[Coordinates(1, 0)] = std::make_shared<Knight>();
 
-	mTiles[Coordonnees(2, 0)] = std::make_shared<Bishop>();
+	mTiles[Coordinates(2, 0)] = std::make_shared<Bishop>();
 
-	mTiles[Coordonnees(3, 0)] = std::make_shared<Queen>();
+	mTiles[Coordinates(3, 0)] = std::make_shared<Queen>();
 
-	mTiles[Coordonnees(4, 0)] = std::make_shared<King>();
+	mTiles[Coordinates(4, 0)] = std::make_shared<King>();
 
-	pBlackKing = mTiles[Coordonnees(4, 0)];
+	pBlackKing = mTiles[Coordinates(4, 0)];
 
-	mTiles[Coordonnees(4, 7)] = std::make_shared<King>();
+	mTiles[Coordinates(4, 7)] = std::make_shared<King>();
 
-	pWhiteKing = mTiles[Coordonnees(4, 7)];
+	pWhiteKing = mTiles[Coordinates(4, 7)];
 
-	mTiles[Coordonnees(5, 0)] = std::make_shared<Bishop>();
+	mTiles[Coordinates(5, 0)] = std::make_shared<Bishop>();
 
-	mTiles[Coordonnees(6, 0)] = std::make_shared<Knight>();
+	mTiles[Coordinates(6, 0)] = std::make_shared<Knight>();
 
-	mTiles[Coordonnees(7, 0)] = std::make_shared<Rook>();
+	mTiles[Coordinates(7, 0)] = std::make_shared<Rook>();
 
-	mTiles[Coordonnees(0, 7)] = std::make_shared<Rook>();
+	mTiles[Coordinates(0, 7)] = std::make_shared<Rook>();
 
-	mTiles[Coordonnees(1, 7)] = std::make_shared<Knight>();
+	mTiles[Coordinates(1, 7)] = std::make_shared<Knight>();
 
-	mTiles[Coordonnees(2, 7)] = std::make_shared<Bishop>();
+	mTiles[Coordinates(2, 7)] = std::make_shared<Bishop>();
 
-	mTiles[Coordonnees(3, 7)] = std::make_shared<Queen>();
+	mTiles[Coordinates(3, 7)] = std::make_shared<Queen>();
 
-	mTiles[Coordonnees(5, 7)] = std::make_shared<Bishop>();
+	mTiles[Coordinates(5, 7)] = std::make_shared<Bishop>();
 
-	mTiles[Coordonnees(6, 7)] = std::make_shared<Knight>();
+	mTiles[Coordinates(6, 7)] = std::make_shared<Knight>();
 
-	mTiles[Coordonnees(7, 7)] = std::make_shared<Rook>();
+	mTiles[Coordinates(7, 7)] = std::make_shared<Rook>();
 
 	for (int y : range(1, 7))
 	{
 		for (int x : range(8))
 		{
 			std::shared_ptr<ChessPiece> piece = nullptr;
-			Coordonnees coord(x, y);
+			Coordinates coord(x, y);
 			if (y == 1) 
 			{
 				piece = std::make_shared<Pawn>();
@@ -372,14 +392,14 @@ void ChessBoard::initPartie()
 				piece->setSide(white);
 				piece->updatePos(coord);
 			}
-			mTiles[Coordonnees(x, y)] = move(piece);
+			mTiles[Coordinates(x, y)] = move(piece);
 		}
 	}
 
 	for (int x : range(8))
 	{
-		Coordonnees coord0(x, 0);
-		Coordonnees coord7(x, 7);
+		Coordinates coord0(x, 0);
+		Coordinates coord7(x, 7);
 		mTiles[coord0]->setSide(black);
 		mTiles[coord0]->updatePos(coord0);
 		mTiles[coord7]->setSide(white);
@@ -406,7 +426,7 @@ void ChessBoard::updateBoard()
 	{
 		for (int x : range(8))
 		{
-			Coordonnees position(x, y);
+			Coordinates position(x, y);
 			if (mTiles[position])
 			{
 				mTiles[position]->updatePos(position);

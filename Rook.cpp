@@ -5,9 +5,9 @@ Rook::Rook()
 	mType = rook;
 }
 
-bool Rook::estMovementValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
+bool Rook::estMovementValide(Coordinates destination, std::map<Coordinates, std::shared_ptr<ChessPiece>> tiles)
 {
-	Coordonnees diff(destination.x - mPosition.x, destination.y - mPosition.y);
+	Coordinates diff(destination.x - mPosition.x, destination.y - mPosition.y);
 	if (diff.x == 0 || diff.y == 0)
 	{
 		int i = 0;
@@ -20,7 +20,7 @@ bool Rook::estMovementValide(Coordonnees destination, std::map<Coordonnees, std:
 		{
 			j = diff.y / abs(diff.y) * -1;
 		}
-		Coordonnees coord(destination.x, destination.y);
+		Coordinates coord(destination.x, destination.y);
 		while (coord.x != mPosition.x || coord.y != mPosition.y)
 		{
 			if (tiles[coord] && tiles[coord] != tiles[destination])
@@ -35,7 +35,7 @@ bool Rook::estMovementValide(Coordonnees destination, std::map<Coordonnees, std:
 	}
 	return false;
 }
-bool Rook::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
+bool Rook::estAttaqueValide(Coordinates destination, std::map<Coordinates, std::shared_ptr<ChessPiece>> tiles)
 {
 	if (tiles[destination]->getSide() == mSide)
 	{

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ChessWindow.hpp"
-#include "Coordonnees.hpp"
+#include "Coordinates.hpp"
 
 #pragma warning(push, 0)
 #include <QHBoxLayout>
@@ -43,7 +43,7 @@ ChessWindow::ChessWindow(QWidget* parent) :
 			setColor(x, y);
 			pBoutons[x][y]->setIconSize(QSize(80, 80));
 			QObject::connect(pBoutons[x][y], &QPushButton::clicked, &mChess, [this, x, y]() { 
-				mChess.caseAppuye(Coordonnees(x, y));
+				mChess.caseAppuye(Coordinates(x, y));
 			});
 			layout->addWidget(pBoutons[x][y], y, x);
 		}
@@ -54,6 +54,8 @@ ChessWindow::ChessWindow(QWidget* parent) :
 	QObject::connect(&mChess, &ChessBoard::finPartie, this, &ChessWindow::finPartie);
 
 	QObject::connect(&mChess, &ChessBoard::selectionPossible, this, &ChessWindow::selectionPossible);
+
+	QObject::connect(&mChess, &ChessBoard::inputPawnTranform, this, &ChessWindow::inputPawnTranform);
 
 	auto bottomLayout = new QHBoxLayout();
 	layoutPrincipal->addLayout(bottomLayout);
@@ -115,7 +117,7 @@ void ChessWindow::afficherPieces()
 	{
 		for (int x : range(8))
 		{
-			Coordonnees position(x, y);
+			Coordinates position(x, y);
 			setColor(x, y);
 			if (mChess.mTiles[position])
 			{
@@ -137,19 +139,40 @@ void ChessWindow::finPartie(side loser)
 	QMessageBox message;
 	if (loser == white)
 	{
-		message.setText("Checkmate, Black win !");
+		message.setText("Checkmate, Black wins!");
 		message.exec();
 	}
 	else
 	{
-		message.setText("Checkmate, White win !");
+		message.setText("Checkmate, White wins!");
 		message.exec();
 	}
 }
 
-void ChessWindow::selectionPossible(Coordonnees position)
+void ChessWindow::selectionPossible(Coordinates position)
 {
 	int x = position.x;
 	int y = position.y;
 	pBoutons[x][y]->setStyleSheet("border: 0px ; background-color:#e6d27a;");
+}
+
+void ChessWindow::inputPawnTranform(Coordinates iPosition)
+{
+	type pieceType;
+	QMessageBox message;
+
+	message.setText("Which piece do you want: ");
+
+	QPushButton* rookButton = message.addButton(tr("Rook"), QMessageBox::NoRole);
+	QPushButton* queenButton = message.addButton(tr("Queen"), QMessageBox::NoRole);
+	QPushButton* knightButton = message.addButton(tr("Knight"), QMessageBox::NoRole);
+	QPushButton* bishopButton = message.addButton(tr("Bishop"), QMessageBox::NoRole);
+
+	message.setMinimumSize(200, 200);
+	message.exec();
+
+	
+	mChess.pawnTranform(message.clickedButton()->text(), iPosition);
+	
+	//mChess.pawnTranform(pieceType, iPosition);
 }

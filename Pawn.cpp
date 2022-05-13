@@ -5,7 +5,7 @@ Pawn::Pawn()
 	mType = pawn;
 }
 
-bool Pawn::estMovementValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
+bool Pawn::estMovementValide(Coordinates destination, std::map<Coordinates, std::shared_ptr<ChessPiece>> tiles)
 {
 	if (destination.x == mPosition.x)
 	{
@@ -13,7 +13,7 @@ bool Pawn::estMovementValide(Coordonnees destination, std::map<Coordonnees, std:
 		{
 			if (mPosition.y == 6)
 			{
-				if (destination.y >= mPosition.y - 2 && !tiles[Coordonnees(mPosition.x, mPosition.y - 1)])
+				if (destination.y >= mPosition.y - 2 && !tiles[Coordinates(mPosition.x, mPosition.y - 1)])
 				{
 					return true;
 				}
@@ -30,7 +30,7 @@ bool Pawn::estMovementValide(Coordonnees destination, std::map<Coordonnees, std:
 		{
 			if (mPosition.y == 1)
 			{
-				if (destination.y <= mPosition.y + 2 && !tiles[Coordonnees(mPosition.x,mPosition.y+1)])
+				if (destination.y <= mPosition.y + 2 && !tiles[Coordinates(mPosition.x,mPosition.y+1)])
 				{
 					return true;
 				}
@@ -47,7 +47,7 @@ bool Pawn::estMovementValide(Coordonnees destination, std::map<Coordonnees, std:
 	return false;
 }
 
-bool Pawn::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)//std::pair<int, int> destination) //= 0;
+bool Pawn::estAttaqueValide(Coordinates destination, std::map<Coordinates, std::shared_ptr<ChessPiece>> tiles)//std::pair<int, int> destination) //= 0;
 {
 	if (tiles[destination]->getSide() == mSide)
 	{

@@ -5,7 +5,7 @@ Queen::Queen()
 	mType = queen;
 }
 
-bool Queen::checkDiagonalMov(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles) 
+bool Queen::checkDiagonalMov(Coordinates destination, std::map<Coordinates, std::shared_ptr<ChessPiece>> tiles)
 {
 	int diffx = destination.x - mPosition.x;
 	int diffy = destination.y - mPosition.y;
@@ -28,7 +28,7 @@ bool Queen::checkDiagonalMov(Coordonnees destination, std::map<Coordonnees, std:
 		{
 			j = -1;
 		}
-		Coordonnees coordonnees(destination.x, destination.y);
+		Coordinates coordonnees(destination.x, destination.y);
 		while (coordonnees.x != mPosition.x && coordonnees.y != mPosition.y)
 		{
 			if (tiles[coordonnees] && tiles[coordonnees] != tiles[destination])
@@ -43,9 +43,9 @@ bool Queen::checkDiagonalMov(Coordonnees destination, std::map<Coordonnees, std:
 
 	return false;
 }
-bool Queen::checkStraightMov(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
+bool Queen::checkStraightMov(Coordinates destination, std::map<Coordinates, std::shared_ptr<ChessPiece>> tiles)
 {
-	Coordonnees diff(destination.x - mPosition.x, destination.y - mPosition.y);
+	Coordinates diff(destination.x - mPosition.x, destination.y - mPosition.y);
 	if (diff.x == 0 || diff.y == 0)
 	{
 		int i = 0;
@@ -58,7 +58,7 @@ bool Queen::checkStraightMov(Coordonnees destination, std::map<Coordonnees, std:
 		{
 			j = diff.y / abs(diff.y) * -1;
 		}
-		Coordonnees coord(destination.x, destination.y);
+		Coordinates coord(destination.x, destination.y);
 		while (coord.x != mPosition.x || coord.y != mPosition.y)
 		{
 			if (tiles[coord] && tiles[coord] != tiles[destination])
@@ -73,7 +73,7 @@ bool Queen::checkStraightMov(Coordonnees destination, std::map<Coordonnees, std:
 	return false;
 }
 
-bool Queen::estMovementValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
+bool Queen::estMovementValide(Coordinates destination, std::map<Coordinates, std::shared_ptr<ChessPiece>> tiles)
 {
 	if (checkDiagonalMov(destination, tiles) || checkStraightMov(destination, tiles))
 	{
@@ -81,7 +81,7 @@ bool Queen::estMovementValide(Coordonnees destination, std::map<Coordonnees, std
 	}
 	return false;
 }
-bool Queen::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
+bool Queen::estAttaqueValide(Coordinates destination, std::map<Coordinates, std::shared_ptr<ChessPiece>> tiles)
 {
 	if (tiles[destination]->getSide() == mSide)
 	{

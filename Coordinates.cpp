@@ -1,10 +1,10 @@
-#include "Coordonnees.hpp"
+#include "Coordinates.hpp"
 
-Coordonnees::Coordonnees() : x(0), y(0) {};
+Coordinates::Coordinates() : x(0), y(0) {};
 
-Coordonnees::Coordonnees(int x, int y) : x(x), y(y) {};
+Coordinates::Coordinates(int x, int y) : x(x), y(y) {};
 
-bool Coordonnees::operator==(const Coordonnees& other) const
+bool Coordinates::operator==(const Coordinates& other) const
 {
 	if (other.x == x && other.y == y)
 	{
@@ -15,14 +15,14 @@ bool Coordonnees::operator==(const Coordonnees& other) const
 	}
 }
 
-Coordonnees& Coordonnees::operator-(const Coordonnees& other)
+Coordinates& Coordinates::operator-(const Coordinates& other)
 {
 	x = x - other.x;
 	y = y - other.y;
 	return *this;
 };
 
-Coordonnees& Coordonnees::operator=(const Coordonnees& other)
+Coordinates& Coordinates::operator=(const Coordinates& other)
 {
 	if (this == &other)
 		return *this;
@@ -32,7 +32,7 @@ Coordonnees& Coordonnees::operator=(const Coordonnees& other)
 };
 
 // On doit avoir ce overload d'opérateur sinon ne marche pas avec un std::map
-bool Coordonnees::operator<(const Coordonnees& coord) const {
+bool Coordinates::operator<(const Coordinates& coord) const {
 	if (x < coord.x) return true;
 	if (x > coord.x) return false;
 	if (y < coord.y) return true;

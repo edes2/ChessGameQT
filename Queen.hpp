@@ -11,11 +11,11 @@ public:
 
     QString getImagePath() override;
 
-    bool estMovementValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles) override;
-    bool estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles) override;
+    bool estMovementValide(Coordinates destination, std::map<Coordinates, std::shared_ptr<ChessPiece>> tiles) override;
+    bool estAttaqueValide(Coordinates destination, std::map<Coordinates, std::shared_ptr<ChessPiece>> tiles) override;
 
-    bool checkDiagonalMov(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles);
-    bool checkStraightMov(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles);
+    bool checkDiagonalMov(Coordinates destination, std::map<Coordinates, std::shared_ptr<ChessPiece>> tiles);
+    bool checkStraightMov(Coordinates destination, std::map<Coordinates, std::shared_ptr<ChessPiece>> tiles);
 
 };
 

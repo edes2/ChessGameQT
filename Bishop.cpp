@@ -5,7 +5,7 @@ Bishop::Bishop()
 	mType = bishop;
 }
 
-bool Bishop::estMovementValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles) {
+bool Bishop::estMovementValide(Coordinates destination, std::map<Coordinates, std::shared_ptr<ChessPiece>> tiles) {
 	int diffx = destination.x - mPosition.x;
 	int diffy = destination.y - mPosition.y;
 	if (abs(diffx) == abs(diffy)) {
@@ -27,7 +27,7 @@ bool Bishop::estMovementValide(Coordonnees destination, std::map<Coordonnees, st
 		{
 			j = -1;
 		}
-		Coordonnees coordonnees(destination.x, destination.y);
+		Coordinates coordonnees(destination.x, destination.y);
 		while (coordonnees.x != mPosition.x && coordonnees.y != mPosition.y)
 		{
 			if (tiles[coordonnees] && tiles[coordonnees] != tiles[destination])
@@ -43,7 +43,7 @@ bool Bishop::estMovementValide(Coordonnees destination, std::map<Coordonnees, st
 	return false;
 }
 
-bool Bishop::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
+bool Bishop::estAttaqueValide(Coordinates destination, std::map<Coordinates, std::shared_ptr<ChessPiece>> tiles)
 {
 	if (tiles[destination]->getSide() == mSide)
 	{

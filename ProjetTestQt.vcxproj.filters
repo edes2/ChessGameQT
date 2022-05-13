@@ -67,7 +67,7 @@
     <ClCompile Include="Rook.cpp">
       <Filter>Source Files\Chesspieces</Filter>
     </ClCompile>
-    <ClCompile Include="Coordonnees.cpp">
+    <ClCompile Include="Coordinates.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TestChess.cpp">
@@ -107,7 +107,7 @@
     <ClInclude Include="namespace.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Coordonnees.hpp">
+    <ClInclude Include="Coordinates.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -5,7 +5,7 @@ Knight::Knight()
 	mType = knight;
 }
 
-bool Knight::estMovementValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
+bool Knight::estMovementValide(Coordinates destination, std::map<Coordinates, std::shared_ptr<ChessPiece>> tiles)
 {
 	if ((abs(destination.x - mPosition.x) == 2) && (abs(destination.y - mPosition.y) == 1))
 	{
@@ -18,7 +18,7 @@ bool Knight::estMovementValide(Coordonnees destination, std::map<Coordonnees, st
 	return false;
 }
 
-bool Knight::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
+bool Knight::estAttaqueValide(Coordinates destination, std::map<Coordinates, std::shared_ptr<ChessPiece>> tiles)
 {
 	if (tiles[destination]->getSide() == mSide)
 	{

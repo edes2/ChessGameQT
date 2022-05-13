@@ -28,10 +28,10 @@ public:
 	void setHasMoved();
 
 protected:
-	side side_;
-	type type_;
+	side mSide;
+	type mType;
 
-	Coordonnees position_;
+	Coordonnees mPosition;
 
-	bool hasMoved_;
+	bool mHasMoved;
 };

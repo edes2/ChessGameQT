@@ -2,42 +2,42 @@
 
 Pawn::Pawn()
 {
-	type_ = pawn;
+	mType = pawn;
 }
 
 bool Pawn::estMovementValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
 {
-	if (destination.x == position_.x)
+	if (destination.x == mPosition.x)
 	{
-		if (side_ == white && (destination.y < position_.y))
+		if (mSide == white && (destination.y < mPosition.y))
 		{
-			if (position_.y == 6)
+			if (mPosition.y == 6)
 			{
-				if (destination.y >= position_.y - 2 && !tiles[Coordonnees(position_.x, position_.y - 1)])
+				if (destination.y >= mPosition.y - 2 && !tiles[Coordonnees(mPosition.x, mPosition.y - 1)])
 				{
 					return true;
 				}
 			}
 			else
 			{
-				if (destination.y == position_.y - 1)
+				if (destination.y == mPosition.y - 1)
 				{
 					return true;
 				}
 			}
 		}
-		else if (side_ == black && (destination.y > position_.y))
+		else if (mSide == black && (destination.y > mPosition.y))
 		{
-			if (position_.y == 1)
+			if (mPosition.y == 1)
 			{
-				if (destination.y <= position_.y + 2 && !tiles[Coordonnees(position_.x,position_.y+1)])
+				if (destination.y <= mPosition.y + 2 && !tiles[Coordonnees(mPosition.x,mPosition.y+1)])
 				{
 					return true;
 				}
 			}
 			else
 			{
-				if (destination.y == position_.y + 1)
+				if (destination.y == mPosition.y + 1)
 				{
 					return true;
 				}
@@ -49,20 +49,20 @@ bool Pawn::estMovementValide(Coordonnees destination, std::map<Coordonnees, std:
 
 bool Pawn::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)//std::pair<int, int> destination) //= 0;
 {
-	if (tiles[destination]->getSide() == side_)
+	if (tiles[destination]->getSide() == mSide)
 	{
 		return false;
 	}
-	if (side_ == white)
+	if (mSide == white)
 	{
-		if (((destination.x == position_.x + 1) && (destination.y == position_.y - 1)) || ((destination.x == position_.x - 1) && (destination.y == position_.y - 1)))
+		if (((destination.x == mPosition.x + 1) && (destination.y == mPosition.y - 1)) || ((destination.x == mPosition.x - 1) && (destination.y == mPosition.y - 1)))
 		{
 			return true;
 		}
 	}
 	else
 	{
-		if (((destination.x == position_.x + 1) && (destination.y == position_.y + 1)) || ((destination.x == position_.x - 1) && (destination.y == position_.y + 1)))
+		if (((destination.x == mPosition.x + 1) && (destination.y == mPosition.y + 1)) || ((destination.x == mPosition.x - 1) && (destination.y == mPosition.y + 1)))
 		{
 			return true;
 		}
@@ -72,7 +72,7 @@ bool Pawn::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::
 
 QString Pawn::getImagePath() {
 	QString path;
-	if (side_ == white) {
+	if (mSide == white) {
 		path = "images/WhitePawn.png";
 	}
 	else

@@ -45,20 +45,7 @@ int main(int argc, char *argv[])
 	QApplication app(argc, argv);
 	initialiserBibliothequeCours(argc, argv);
 
-	QMessageBox message;
-	message.setText("Nouvelle Partie :");
-	message.setInformativeText("Voulez vous commencer une nouvelle partie ?");
-	QPushButton* yesButton = message.addButton(QMessageBox::Yes);
-	QPushButton* noButton = message.addButton(QMessageBox::No);
-	message.setMinimumSize(200, 200);
-	message.exec();
-
-	if (message.clickedButton() == yesButton) {
-		ChessWindow chessWindow;
-		chessWindow.show();
-		return app.exec();
-	}
-	else if (message.clickedButton() == noButton) {
-		return 0;
-	}
+	ChessWindow chessWindow;
+	chessWindow.show();
+	return app.exec();
 }

@@ -1,25 +1,17 @@
 #include "King.hpp"
 
-int King::compteur = 0;
-
 King::King()
 {
-	if (compteur >= 2)
-	{
-		throw MoreThanTwoKings();
-	}
-	++compteur;
-	type_ = king;
+	mType = king;
 }
 
 King::~King()
 {
-	--compteur;
 }
 
 bool King::estMovementValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
 {
-	if ((abs(destination.x - position_.x) <= 1) && (abs(destination.y - position_.y) <= 1))
+	if ((abs(destination.x - mPosition.x) <= 1) && (abs(destination.y - mPosition.y) <= 1))
 	{
 		return true;
 	}
@@ -28,14 +20,14 @@ bool King::estMovementValide(Coordonnees destination, std::map<Coordonnees, std:
 bool King::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
 {
 	// Castling
-	if (!hasMoved_) 
+	if (!mHasMoved) 
 	{
 		if (!tiles[destination]) { return false; }
-		if (tiles[destination]->getSide() == side_ && tiles[destination]->getType() == rook)
+		if (tiles[destination]->getSide() == mSide && tiles[destination]->getType() == rook)
 		{
 			if (tiles[destination]->getHasMoved() == false)
 			{
-				Coordonnees diff(destination.x - position_.x, destination.y - position_.y);
+				Coordonnees diff(destination.x - mPosition.x, destination.y - mPosition.y);
 				if (diff.y == 0)
 				{
 					int i = 0;
@@ -46,7 +38,7 @@ bool King::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::
 					}
 
 					Coordonnees coord(destination.x, destination.y);
-					while (coord.x != position_.x || coord.y != position_.y)
+					while (coord.x != mPosition.x || coord.y != mPosition.y)
 					{
 						if (tiles[coord] && tiles[coord] != tiles[destination])
 						{
@@ -61,7 +53,7 @@ bool King::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::
 			}
 		}
 	}
-	if (estMovementValide(destination, tiles) && tiles[destination] && tiles[destination]->getSide() != side_)
+	if (estMovementValide(destination, tiles) && tiles[destination] && tiles[destination]->getSide() != mSide)
 	{
 		return true;
 	}
@@ -70,7 +62,7 @@ bool King::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::
 
 QString King::getImagePath() {
 	QString path;
-	if (side_ == white) {
+	if (mSide == white) {
 		path = "images/WhiteKing.png";
 	}
 	else

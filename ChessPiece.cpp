@@ -1,41 +1,41 @@
 #include "ChessPiece.hpp"
 
-ChessPiece::ChessPiece() : hasMoved_(false)
+ChessPiece::ChessPiece() : mHasMoved(false)
 {
 
 }
 
 void ChessPiece::setSide(side side)
 {
-	side_ = side;
+	mSide = side;
 }
 
 side ChessPiece::getSide() const
 {
-	return side_;
+	return mSide;
 }
 
 bool ChessPiece::getHasMoved() const
 {
-	return hasMoved_;
+	return mHasMoved;
 }
 
 void ChessPiece::setHasMoved()
 {
-	hasMoved_ = true;
+	mHasMoved = true;
 }
 
 type ChessPiece::getType() const
 {
-	return type_;
+	return mType;
 }
 
 void ChessPiece::updatePos(Coordonnees position)
 {
-	position_ = position;
+	mPosition = position;
 }
 
 Coordonnees ChessPiece::getPos() const
 {
-	return position_;
+	return mPosition;
 }

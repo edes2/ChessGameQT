@@ -2,12 +2,12 @@
 
 Rook::Rook()
 {
-	type_ = rook;
+	mType = rook;
 }
 
 bool Rook::estMovementValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
 {
-	Coordonnees diff(destination.x - position_.x, destination.y - position_.y);
+	Coordonnees diff(destination.x - mPosition.x, destination.y - mPosition.y);
 	if (diff.x == 0 || diff.y == 0)
 	{
 		int i = 0;
@@ -21,7 +21,7 @@ bool Rook::estMovementValide(Coordonnees destination, std::map<Coordonnees, std:
 			j = diff.y / abs(diff.y) * -1;
 		}
 		Coordonnees coord(destination.x, destination.y);
-		while (coord.x != position_.x || coord.y != position_.y)
+		while (coord.x != mPosition.x || coord.y != mPosition.y)
 		{
 			if (tiles[coord] && tiles[coord] != tiles[destination])
 			{
@@ -30,14 +30,14 @@ bool Rook::estMovementValide(Coordonnees destination, std::map<Coordonnees, std:
 			coord.x += i;
 			coord.y += j;
 		}
-		if (!hasMoved_) { hasMoved_ = true; }
+		if (!mHasMoved) { mHasMoved = true; }
 		return true;
 	}
 	return false;
 }
 bool Rook::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
 {
-	if (tiles[destination]->getSide() == side_)
+	if (tiles[destination]->getSide() == mSide)
 	{
 		return false;
 	}
@@ -46,7 +46,7 @@ bool Rook::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::
 
 QString Rook::getImagePath() {
 	QString path;
-	if (side_ == white) {
+	if (mSide == white) {
 		path = "images/WhiteRook.png";
 	}
 	else

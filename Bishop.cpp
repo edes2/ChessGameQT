@@ -2,12 +2,12 @@
 
 Bishop::Bishop()
 {
-	type_ = bishop;
+	mType = bishop;
 }
 
 bool Bishop::estMovementValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles) {
-	int diffx = destination.x - position_.x;
-	int diffy = destination.y - position_.y;
+	int diffx = destination.x - mPosition.x;
+	int diffy = destination.y - mPosition.y;
 	if (abs(diffx) == abs(diffy)) {
 		int i;
 		int j;
@@ -28,7 +28,7 @@ bool Bishop::estMovementValide(Coordonnees destination, std::map<Coordonnees, st
 			j = -1;
 		}
 		Coordonnees coordonnees(destination.x, destination.y);
-		while (coordonnees.x != position_.x && coordonnees.y != position_.y)
+		while (coordonnees.x != mPosition.x && coordonnees.y != mPosition.y)
 		{
 			if (tiles[coordonnees] && tiles[coordonnees] != tiles[destination])
 			{
@@ -45,7 +45,7 @@ bool Bishop::estMovementValide(Coordonnees destination, std::map<Coordonnees, st
 
 bool Bishop::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
 {
-	if (tiles[destination]->getSide() == side_)
+	if (tiles[destination]->getSide() == mSide)
 	{
 		return false;
 	}
@@ -58,7 +58,7 @@ bool Bishop::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std
 
 QString Bishop::getImagePath() {
 	QString path;
-	if (side_ == white) {
+	if (mSide == white) {
 		path = "images/WhiteBishop.png";
 	}
 	else

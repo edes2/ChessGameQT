@@ -2,16 +2,16 @@
 
 Knight::Knight()
 {
-	type_ = knight;
+	mType = knight;
 }
 
 bool Knight::estMovementValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
 {
-	if ((abs(destination.x - position_.x) == 2) && (abs(destination.y - position_.y) == 1))
+	if ((abs(destination.x - mPosition.x) == 2) && (abs(destination.y - mPosition.y) == 1))
 	{
 		return true;
 	}
-	if ((abs(destination.x - position_.x) == 1) && (abs(destination.y - position_.y) == 2))
+	if ((abs(destination.x - mPosition.x) == 1) && (abs(destination.y - mPosition.y) == 2))
 	{
 		return true;
 	}
@@ -20,7 +20,7 @@ bool Knight::estMovementValide(Coordonnees destination, std::map<Coordonnees, st
 
 bool Knight::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std::shared_ptr<ChessPiece>> tiles)
 {
-	if (tiles[destination]->getSide() == side_)
+	if (tiles[destination]->getSide() == mSide)
 	{
 		return false;
 	}
@@ -29,7 +29,7 @@ bool Knight::estAttaqueValide(Coordonnees destination, std::map<Coordonnees, std
 
 QString Knight::getImagePath() {
 	QString path;
-	if (side_ == white) {
+	if (mSide == white) {
 		path = "images/WhiteKnight.png";
 	}
 	else

@@ -13,6 +13,7 @@ public:
 
 	bool operator<(const Coordonnees& coord) const;
 
-	int x; // Public afin qu'ils soient faciles a acceder.
+	// Made public for ease of access
+	int x; 
 	int y;
 };

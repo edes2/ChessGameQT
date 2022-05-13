@@ -16,36 +16,36 @@ TEST(ChessBoard, mouvements)
 	ChessBoard chess;
 	chess.initPartie();
 
-	EXPECT_EQ(chess.tiles[Coordonnees(7, 7)]->getSide(), white);
-	EXPECT_EQ(chess.tiles[Coordonnees(5, 0)]->getSide(), black);
+	EXPECT_EQ(chess.mTiles[Coordonnees(7, 7)]->getSide(), white);
+	EXPECT_EQ(chess.mTiles[Coordonnees(5, 0)]->getSide(), black);
 
 
 	chess.caseAppuye(Coordonnees(4, 6)); // Selection
 	chess.caseAppuye(Coordonnees(4, 4)); // Mouvement
 
-	EXPECT_EQ(chess.tiles[Coordonnees(4, 4)]->getSide(), white);
+	EXPECT_EQ(chess.mTiles[Coordonnees(4, 4)]->getSide(), white);
 
 	chess.caseAppuye(Coordonnees(4, 1)); // Selection
 	chess.caseAppuye(Coordonnees(4, 3)); // Mouvement
 
-	EXPECT_EQ(chess.tiles[Coordonnees(4, 3)]->getSide(), black);
+	EXPECT_EQ(chess.mTiles[Coordonnees(4, 3)]->getSide(), black);
 
 	chess.caseAppuye(Coordonnees(6, 7)); // Selection
 	chess.caseAppuye(Coordonnees(5, 5)); // Mouvement
 
-	EXPECT_EQ(chess.tiles[Coordonnees(5, 5)]->getPos(), Coordonnees(5,5));
+	EXPECT_EQ(chess.mTiles[Coordonnees(5, 5)]->getPos(), Coordonnees(5,5));
 
 	chess.caseAppuye(Coordonnees(3, 1)); // Selection
 	chess.caseAppuye(Coordonnees(3, 2)); // Mouvement
 
-	EXPECT_EQ(chess.tiles[Coordonnees(3, 2)]->getPos(), Coordonnees(3,2));
+	EXPECT_EQ(chess.mTiles[Coordonnees(3, 2)]->getPos(), Coordonnees(3,2));
 
 	chess.caseAppuye(Coordonnees(3, 6)); // Selection
 	chess.caseAppuye(Coordonnees(3, 4)); // Mouvement
 
-	EXPECT_EQ(chess.tiles[Coordonnees(3, 4)]->getPos(), Coordonnees(3, 4));
+	EXPECT_EQ(chess.mTiles[Coordonnees(3, 4)]->getPos(), Coordonnees(3, 4));
 
-	EXPECT_EQ(chess.tiles[Coordonnees(5, 3)], nullptr); // Case vide
+	EXPECT_EQ(chess.mTiles[Coordonnees(5, 3)], nullptr); // Case vide
 }
 
 TEST(ChessBoard, echecEtMath)

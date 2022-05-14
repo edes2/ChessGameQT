@@ -4,6 +4,6 @@
 
 Chess game made with Qt using a Model-View design pattern.
 
-It can still be improved and optimized. Feel free to do so!
+There is still is a lot of improvement and optimization that can be done. Feel free to do so! 
 
 This project uses Qt 6 and Visual Studio.

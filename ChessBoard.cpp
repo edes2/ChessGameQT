@@ -107,7 +107,7 @@ void ChessBoard::mouvementsPossibles()
 				{
 				
 					mTiles[*pCaseSelectionnee] = move(mTiles[coord]);
-					mTiles[*pCaseSelectionnee]->updatePos(*pCaseSelectionnee);
+					mTiles[*pCaseSelectionnee]->updatePos(*pCaseSelectionnee); //// ????
 
 					if (backup)
 					{
@@ -124,6 +124,7 @@ void ChessBoard::mouvementsPossibles()
 
 bool ChessBoard::tryMove(Coordinates destination)
 {
+  bool enPassant = false;
 	if (mTiles[destination])
 	{
 		if (mTiles[*pCaseSelectionnee]->estAttaqueValide(destination, mTiles))
@@ -162,8 +163,29 @@ bool ChessBoard::tryMove(Coordinates destination)
 	{
 		if (mTiles[*pCaseSelectionnee]->estMovementValide(destination, mTiles))
 		{
+      Coordinates enemyPawn;
+      if (mTiles[*pCaseSelectionnee]->getType() == pawn && mTiles[*pCaseSelectionnee]->mIsMoveEnPassant)
+      {
+        
+        if (mTurn == white)
+        {
+          enemyPawn = destination + Coordinates(0, 1);
+          enPassant = true;
+          
+        }
+        else
+        {
+          enemyPawn = destination + Coordinates(0, -1);
+          enPassant = true;
+        }
+      }
+
 			mTiles[destination] = move(mTiles[*pCaseSelectionnee]);
 			mTiles[destination]->updatePos(destination);
+      if (enPassant)
+      {
+        mTiles[enemyPawn] = nullptr;
+      }
 			if (estEnEchec())
 			{
 				mTiles[*pCaseSelectionnee] = move(mTiles[destination]);
@@ -430,6 +452,17 @@ void ChessBoard::updateBoard()
 			if (mTiles[position])
 			{
 				mTiles[position]->updatePos(position);
+        if (mTiles[position]->getSide() == mTurn)
+        {
+          if (mTiles[position]->getType() == pawn)
+          {
+            Pawn* pPawn = dynamic_cast<Pawn*>(mTiles[position].get()); // pas sur que ca marche
+            if (pPawn)
+            {
+              pPawn->movedTwoTiles = false;
+            }
+          }
+        }
 			}
 		}
 	}

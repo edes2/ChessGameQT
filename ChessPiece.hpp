@@ -28,6 +28,8 @@ public:
 	bool getHasMoved() const;
 	void setHasMoved();
 
+  bool mIsMoveEnPassant;
+
 protected:
 	side mSide;
 	type mType;

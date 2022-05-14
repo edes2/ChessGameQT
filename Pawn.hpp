@@ -13,5 +13,9 @@ public:
 
     bool estMovementValide(Coordinates destination, std::map<Coordinates, std::shared_ptr<ChessPiece>> tiles) override;
     bool estAttaqueValide(Coordinates destination, std::map<Coordinates, std::shared_ptr<ChessPiece>> tiles) override;
+
+    bool isEnPassant(Coordinates destination, std::map<Coordinates, std::shared_ptr<ChessPiece>> tiles);
+public:
+    bool movedTwoTiles;
 };
 

@@ -57,4 +57,5 @@ private:
 	bool mIsBackup;
 	bool mFin;
 	bool mPawnTwoTiles;
+  //bool mMoveEnPassant;
 };

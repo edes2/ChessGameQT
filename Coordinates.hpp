@@ -9,6 +9,8 @@ public:
 	bool operator==(const Coordinates& other) const;
 
 	Coordinates& operator=(const Coordinates& other);
+
+  Coordinates& operator+(const Coordinates& other);
 	Coordinates& operator-(const Coordinates& other);
 
 	bool operator<(const Coordinates& coord) const;

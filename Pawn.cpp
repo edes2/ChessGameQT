@@ -1,12 +1,16 @@
 #include "Pawn.hpp"
 
-Pawn::Pawn()
+Pawn::Pawn() : movedTwoTiles(false)
 {
 	mType = pawn;
 }
 
 bool Pawn::estMovementValide(Coordinates destination, std::map<Coordinates, std::shared_ptr<ChessPiece>> tiles)
 {
+  if (isEnPassant(destination, tiles))
+  {
+    return true;
+  }
 	if (destination.x == mPosition.x)
 	{
 		if (mSide == white && (destination.y < mPosition.y))
@@ -15,6 +19,7 @@ bool Pawn::estMovementValide(Coordinates destination, std::map<Coordinates, std:
 			{
 				if (destination.y >= mPosition.y - 2 && !tiles[Coordinates(mPosition.x, mPosition.y - 1)])
 				{
+          movedTwoTiles = true;
 					return true;
 				}
 			}
@@ -32,6 +37,7 @@ bool Pawn::estMovementValide(Coordinates destination, std::map<Coordinates, std:
 			{
 				if (destination.y <= mPosition.y + 2 && !tiles[Coordinates(mPosition.x,mPosition.y+1)])
 				{
+          movedTwoTiles = true;
 					return true;
 				}
 			}
@@ -68,6 +74,58 @@ bool Pawn::estAttaqueValide(Coordinates destination, std::map<Coordinates, std::
 		}
 	}
 	return false;
+}
+
+bool Pawn::isEnPassant(Coordinates destination, std::map<Coordinates, std::shared_ptr<ChessPiece>> tiles)
+{
+  Coordinates pawnPos1 = mPosition;
+  Coordinates pawnPos2 = mPosition;
+
+  if (mSide == white)
+  {
+    if ((destination == (pawnPos1 + Coordinates(1, -1))) || (destination == (pawnPos2 + Coordinates(-1, -1))))
+    {
+      Coordinates enemyPawn = destination + Coordinates(0, 1);
+      if (tiles[enemyPawn]
+        && tiles[enemyPawn]->getType() == pawn
+        && tiles[enemyPawn]->getSide() != mSide
+        )
+      {
+        Pawn* pPawn = dynamic_cast<Pawn*>(tiles[enemyPawn].get()); // pas sur que ca marche
+        if (pPawn)
+        {
+          if (pPawn->movedTwoTiles)
+          {
+            mIsMoveEnPassant = true;
+            return true;
+          }
+        }
+      }
+    }
+  }
+  else
+  {
+    if ((destination == (pawnPos1 + Coordinates(1, 1))) || (destination == (pawnPos2 + Coordinates(-1, 1))))
+    {
+      Coordinates enemyPawn = destination + Coordinates(0, -1);
+      if (tiles[enemyPawn]
+        && tiles[enemyPawn]->getType() == pawn
+        && tiles[enemyPawn]->getSide() != mSide
+        )
+      {
+        Pawn* pPawn = dynamic_cast<Pawn*>(tiles[enemyPawn].get()); // pas sur que ca marche
+        if (pPawn)
+        {
+          if (pPawn->movedTwoTiles)
+          {
+            mIsMoveEnPassant = true;
+            return true;
+          }
+        }
+      }
+    }
+  }
+  return false;
 }
 
 QString Pawn::getImagePath() {

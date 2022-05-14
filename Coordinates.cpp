@@ -15,6 +15,13 @@ bool Coordinates::operator==(const Coordinates& other) const
 	}
 }
 
+Coordinates& Coordinates::operator+(const Coordinates& other)
+{
+  x = x + other.x;
+  y = y + other.y;
+  return *this;
+}
+
 Coordinates& Coordinates::operator-(const Coordinates& other)
 {
 	x = x - other.x;

@@ -125,6 +125,7 @@ bool Pawn::isEnPassant(Coordinates destination, std::map<Coordinates, std::share
       }
     }
   }
+  mIsMoveEnPassant = false;
   return false;
 }
 

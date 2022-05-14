@@ -10,7 +10,8 @@ public:
 
 	Coordinates& operator=(const Coordinates& other);
 
-  Coordinates& operator+(const Coordinates& other);
+  //Coordinates& operator+(const Coordinates& other);
+  Coordinates operator+(const Coordinates& other);
 	Coordinates& operator-(const Coordinates& other);
 
 	bool operator<(const Coordinates& coord) const;

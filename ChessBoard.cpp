@@ -82,6 +82,7 @@ void ChessBoard::pawnTranform(const QString& sPieceType, Coordinates iPosition)
 
 void ChessBoard::mouvementsPossibles()
 {
+  doNoneEnPassant = true;
 	std::shared_ptr<ChessPiece> backup;
 	for (int y : range(8))
 	{
@@ -105,7 +106,7 @@ void ChessBoard::mouvementsPossibles()
 			else {
 				if (tryMove(coord))
 				{
-				
+          if (mIsBackup) { mIsBackup = false; }
 					mTiles[*pCaseSelectionnee] = move(mTiles[coord]);
 					mTiles[*pCaseSelectionnee]->updatePos(*pCaseSelectionnee); //// ????
 
@@ -120,6 +121,7 @@ void ChessBoard::mouvementsPossibles()
 		}
 	}
 	emit selectionPossible(*pCaseSelectionnee);
+  doNoneEnPassant = false;
 }
 
 bool ChessBoard::tryMove(Coordinates destination)
@@ -169,7 +171,7 @@ bool ChessBoard::tryMove(Coordinates destination)
         
         if (mTurn == white)
         {
-          enemyPawn = destination + Coordinates(0, 1);
+          enemyPawn = destination + Coordinates(0, 1); // change destination aussi
           enPassant = true;
           
         }
@@ -182,7 +184,7 @@ bool ChessBoard::tryMove(Coordinates destination)
 
 			mTiles[destination] = move(mTiles[*pCaseSelectionnee]);
 			mTiles[destination]->updatePos(destination);
-      if (enPassant)
+      if (enPassant && !doNoneEnPassant)
       {
         mTiles[enemyPawn] = nullptr;
       }

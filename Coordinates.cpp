@@ -15,11 +15,19 @@ bool Coordinates::operator==(const Coordinates& other) const
 	}
 }
 
-Coordinates& Coordinates::operator+(const Coordinates& other)
+//Coordinates& Coordinates::operator+(const Coordinates& other)
+//{
+//  x = x + other.x;
+//  y = y + other.y;
+//  return *this;
+//}
+
+Coordinates Coordinates::operator+(const Coordinates& other)
 {
-  x = x + other.x;
-  y = y + other.y;
-  return *this;
+  Coordinates newObject;
+  newObject.x = x + other.x;
+  newObject.y = y + other.y;
+  return newObject;
 }
 
 Coordinates& Coordinates::operator-(const Coordinates& other)
@@ -31,11 +39,12 @@ Coordinates& Coordinates::operator-(const Coordinates& other)
 
 Coordinates& Coordinates::operator=(const Coordinates& other)
 {
-	if (this == &other)
-		return *this;
-	x = other.x;
-	y = other.y;
-	return *this;
+  if (this != &other)
+  {
+    x = other.x;
+    y = other.y;
+  }
+  return *this;
 };
 
 // On doit avoir ce overload d'opérateur sinon ne marche pas avec un std::map

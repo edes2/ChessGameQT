@@ -1,5 +1,6 @@
 # Chess Game (QT)
-![image](https://user-images.githubusercontent.com/77076540/168382141-9b220d2c-e02a-4d85-a9f9-086e64632377.png)
+
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/77076540/168449048-a8ef817c-2ad3-444a-8650-aefe5bb99f9e.gif)
 
 Chess game made with Qt using a Model-View design pattern.
 

@@ -1,10 +1,7 @@
 ﻿/**
-* Projet Final
-* Jeu d'echec presque complet avec l echec et math et un moyen de recommencer la partie.
+* Chess Game
+* Made with Qt6
 * \file   main.cpp
-* \author Etienne Desclaux et Clémentine Chailleux
-* \date   06 mai 2022
-* Créé le 20 avril 2022
 */
 
 #include "namespace.hpp"
